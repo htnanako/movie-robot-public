@@ -1,2 +1,2 @@
-# movie-robot-sites
-movie-robot的站点配置维护
+# movie-robot-public
+movie-robot的公共配置维护

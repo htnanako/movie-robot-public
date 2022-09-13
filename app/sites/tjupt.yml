@@ -2,7 +2,7 @@ id: tjupt
 name: 北洋园
 domain: https://tjupt.org/
 encoding: UTF-8
-config_url: https://raw.githubusercontent.com/htnanako/movie-robot-sites/main/app/sites/tjupt.yml
+config_url: https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/tjupt.yml
 
 login:
   test:

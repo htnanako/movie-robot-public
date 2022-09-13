@@ -2,7 +2,7 @@ id: hdchina
 name: 瓷器
 domain: https://hdchina.org/
 encoding: UTF-8
-config_url: https://raw.githubusercontent.com/htnanako/movie-robot-sites/main/app/sites/hdchina.yml
+config_url: https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/hdchina.yml
 
 login:
   test:
