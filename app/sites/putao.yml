@@ -1,34 +1,46 @@
-id: pterclub
-name: 猫站
-domain: https://pterclub.com/
+id: putao
+name: 葡萄
+domain: https://pt.sjtu.edu.cn/
 encoding: UTF-8
-config_url: https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/pterclub.yml
+config_url: https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/putao.yml
 version: 20220913
 
 login:
   test:
-    selector: a[data-url="logout.php"]
+    selector: 'a[href^="logout.php"]'
 
 category_mappings:
-  - { id: 401, cate_level1: Movie, cate_level2: "Movies/电影", cate_level2_desc: "Movies/电影" }
-  - { id: 404, cate_level1: TV, cate_level2: "电视剧 (TV Series)", cate_level2_desc: "电视剧 (TV Series)" }
-  - { id: 403, cate_level1: Anime, cate_level2: "动漫 (Anime)", cate_level2_desc: "动漫 (Anime)" }
-  - { id: 405, cate_level1: TV, cate_level2: "综艺 (TV Show)", cate_level2_desc: "综艺 (TV Show)" }
-  - { id: 413, cate_level1: Music, cate_level2: "音乐短片 (MV)", cate_level2_desc: "音乐短片 (MV)" }
-  - { id: 406, cate_level1: Music, cate_level2: "音乐 (Music)", cate_level2_desc: "音乐 (Music)" }
-  - { id: 418, cate_level1: Music, cate_level2: "舞台演出(Stage Performance)", cate_level2_desc: "舞台演出(Stage Performance)" }
-  - { id: 402, cate_level1: Documentary, cate_level2: "纪录片 (Documentary)", cate_level2_desc: "纪录片 (Documentary)" }
-  - { id: 407, cate_level1: TV, cate_level2: "体育 (Sport)", cate_level2_desc: "体育 (Sport)" }
-  - { id: 408, cate_level1: Other, cate_level2: "电子书 (Ebook)", cate_level2_desc: "电子书 (Ebook)" }
-  - { id: 409, cate_level1: Game, cate_level2: "游戏 (Game)", cate_level2_desc: "游戏 (Game)" }
-  - { id: 410, cate_level1: Other, cate_level2: "软件 (Software)", cate_level2_desc: "软件 (Software)" }
-  - { id: 411, cate_level1: Other, cate_level2: "学习 (Study)", cate_level2_desc: "学习 (Study)" }
-  - { id: 412, cate_level1: Other, cate_level2: "其它 (Other)", cate_level2_desc: "其它 (Other)" }
+  - { id: 401, cate_level1: Movie, cate_level2: "华语电影 ", cate_level2_desc: "华语电影" }
+  - { id: 402, cate_level1: Movie, cate_level2: "欧美电影 ", cate_level2_desc: "欧美电影" }
+  - { id: 403, cate_level1: Movie, cate_level2: "亚洲电影 ", cate_level2_desc: "亚洲电影" }
+  - { id: 406 , cate_level1: Documentary, cate_level2: "纪录片 ", cate_level2_desc: "纪录片" }
+  - { id: 407 , cate_level1: TV, cate_level2: "港台电视剧", cate_level2_desc: "港台电视剧" }
+  - { id: 408 , cate_level1: TV, cate_level2: "亚洲电视剧", cate_level2_desc: "亚洲电视剧" }
+  - { id: 409 , cate_level1: TV, cate_level2: "大陆电视剧", cate_level2_desc: "大陆电视剧" }
+  - { id: 410 , cate_level1: TV, cate_level2: "欧美电视剧", cate_level2_desc: "欧美电视剧" }
+  - { id: 411 , cate_level1: TV, cate_level2: "大陆综艺节目", cate_level2_desc: "大陆综艺节目" }
+  - { id: 412 , cate_level1: TV, cate_level2: "港台综艺节目", cate_level2_desc: "港台综艺节目" }
+  - { id: 413 , cate_level1: TV, cate_level2: "欧美综艺节目", cate_level2_desc: "欧美综艺节目" }
+  - { id: 414 , cate_level1: TV, cate_level2: "日韩综艺节目", cate_level2_desc: "日韩综艺节目" }
+  - { id: 420 , cate_level1: Music, cate_level2: "华语音乐", cate_level2_desc: "华语音乐" }
+  - { id: 421 , cate_level1: Music, cate_level2: "日韩音乐", cate_level2_desc: "日韩音乐" }
+  - { id: 422 , cate_level1: Music, cate_level2: "欧美音乐", cate_level2_desc: "欧美音乐" }
+  - { id: 423 , cate_level1: Music, cate_level2: "原声音乐", cate_level2_desc: "原声音乐" }
+  - { id: 425 , cate_level1: Music, cate_level2: "古典音乐", cate_level2_desc: "古典音乐" }
+  - { id: 426 , cate_level1: Music, cate_level2: "mp3合辑", cate_level2_desc: "mp3合辑" }
+  - { id: 429 , cate_level1: Game, cate_level2: "游戏", cate_level2_desc: "游戏" }
+  - { id: 431 , cate_level1: Anime, cate_level2: "动漫", cate_level2_desc: "动漫" }
+  - { id: 432 , cate_level1: TV, cate_level2: "体育", cate_level2_desc: "体育" }
+  - { id: 434 , cate_level1: Other, cate_level2: "软件", cate_level2_desc: "软件" }
+  - { id: 435 , cate_level1: Other, cate_level2: "学习", cate_level2_desc: "学习" }
+  - { id: 440 , cate_level1: Other, cate_level2: "mac", cate_level2_desc: "mac" }
+  - { id: 451 , cate_level1: Other, cate_level2: "校园原创", cate_level2_desc: "校园原创" }
+  - { id: 450 , cate_level1: Other, cate_level2: "其他", cate_level2_desc: "其他" }
 
 userinfo:
-  path: https://pterclub.com/index.php
+  path: https://pt.sjtu.edu.cn//rules.php
   item:
-    selector: table[id="info_block"]
+    selector: table[id="userbar"]
   fields:
     uid:
       default_value: 0
@@ -46,32 +58,32 @@ userinfo:
       selector: a[href^="userdetails.php?id="]
     share_ratio:
       default_value: ''
-      selector: font[class="color_ratio"]
+      selector: img.star[alt="Torrents seeding"]
       method: next_sibling
       filters:
         - name: replace
           args: [ '无限','inf' ]
     uploaded:
       default_value: 0
-      selector: font[class="color_uploaded"]
+      selector: img.arrowup[alt="Torrents seeding"]
       method: next_sibling
       filters:
         - name: replace
           args: [ '无限','inf' ]
     downloaded:
       default_value: 0
-      selector: font[class="color_downloaded"]
+      selector: img.arrowdown[alt="Torrents seeding"]
       method: next_sibling
       filters:
         - name: replace
           args: [ '无限','inf' ]
     seeding:
       default_value: 0
-      selector: img[alt="Torrents seeding"]
+      selector: li[id="peersStatus"] > li > span > img.arrowup[alt="Torrents seeding"]
       method: next_sibling
     leeching:
       default_value: 0
-      selector: img[alt="Torrents leeching"]
+      selector: li[id="peersStatus"] > li > span > img.arrowdown[alt="Torrents leeching"]
       method: next_sibling
     vip_group:
       case:
@@ -123,28 +135,25 @@ torrents:
     details:
       selector: a[href^="details.php?id="]
       attribute: href
-    poster:
-      selector: img[data-orig]
-      attribute: data-orig
     download:
       selector: a[href^="download.php?id="]
       attribute: href
     size:
-      selector: td.rowfollow:nth-child(5)
+      selector: td:nth-child(5)
     grabs:
-      selector: td.rowfollow:nth-child(8)
+      selector: td:nth-child(8)
     seeders:
-      selector: td.rowfollow:nth-child(6)
+      selector: td:nth-child(6)
     leechers:
-      selector: td.rowfollow:nth-child(7)
+      selector: td:nth-child(7)
     date_elapsed:
       # time type: time elapsed (default)
-      selector: td.rowfollow:nth-child(4) > span[title]
+      selector: td:nth-child(4) > span[title]
       attribute: title
       optional: true
     date_added:
       # time added
-      selector: td.rowfollow:nth-child(4):not(:has(span))
+      selector: td:nth-child(4):not(:has(span))
       optional: true
     date:
       text: "{% if fields['date_elapsed'] or fields['date_added'] %}{{ fields['date_elapsed'] if fields['date_elapsed'] else fields['date_added'] }}{% else %}now{% endif %}"
@@ -168,15 +177,11 @@ torrents:
     free_deadline:
       default_value: "{% if fields['downloadvolumefactor']==0 %}{{max_time}}{% endif%}"
       default_value_format: '%Y-%m-%d %H:%M:%S.%f'
-      selector: 'div > b > span[title]'
+      selector: 'font[style][title]'
       attribute: title
       filters:
         - name: dateparse
           args: "%Y-%m-%d %H:%M:%S"
-    tags:
-      selectors: div > a.torrents-tag
-    subject:
-      selector: td.embedded:nth-child(2) > div > div[style] > span
-      contents: -1
     description:
-      text: "{% if fields['tags']%}{{ fields['subject']+' '+fields['tags']|join(' ') }}{% else %}{{ fields['subject'] }}{% endif %}"
+      selector: table.torrentname > tr > td.embedded
+      contents: -1

@@ -1,0 +1,38 @@
+id: rarbg
+name: RARBG
+domain: https://rarbg.to
+encoding: UTF-8
+config_url: https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/rarbg.yml
+version: 20220913
+
+parser: RARBG
+#订阅时搜索的值: cn_name/en_name/imdb_id
+sub_search_value_type:
+  - imdb_id
+user_params:
+  cookie:
+    enable: false
+  traffic_management:
+    enable: false
+category_mappings:
+  - { id: 4, cate_level1: Movie, cate_level2: "XXX (18+)", cate_level2_desc: "XXX (18+)" }
+  - { id: 17, cate_level1: Movie, cate_level2: "Movies/x264", cate_level2_desc: "Movies/x264" }
+  - { id: 44, cate_level1: Movie, cate_level2: "Movies/x264/1080", cate_level2_desc: "Movies/x264/1080" }
+  - { id: 45, cate_level1: Movie, cate_level2: "Movies/x264/720", cate_level2_desc: "Movies/x264/720" }
+  - { id: 47, cate_level1: Movie, cate_level2: "Movies/x264/3D", cate_level2_desc: "Movies/x264/3D" }
+  - { id: 50, cate_level1: Movie, cate_level2: "Movies/x264/4k", cate_level2_desc: "Movies/x264/4k" }
+  - { id: 51, cate_level1: Movie, cate_level2: "Movies/x265/4k", cate_level2_desc: "Movies/x265/4k" }
+  - { id: 52, cate_level1: Movie, cate_level2: "Movs/x265/4k/HDR", cate_level2_desc: "Movs/x265/4k/HDR" }
+  - { id: 42, cate_level1: Movie, cate_level2: "Movies/Full BD", cate_level2_desc: "Movies/Full BD" }
+  - { id: 46, cate_level1: Movie, cate_level2: "Movies/BD Remux", cate_level2_desc: "Movies/BD Remux" }
+  - { id: 54, cate_level1: Movie, cate_level2: "Movies/x265/1080", cate_level2_desc: "Movies/x265/1080" }
+  - { id: 18, cate_level1: TV, cate_level2: "TV Episodes", cate_level2_desc: "TV Episodes" }
+  - { id: 41, cate_level1: TV, cate_level2: "TV HD Episodes", cate_level2_desc: "TV HD Episodes" }
+  - { id: 49, cate_level1: TV, cate_level2: "TV UHD Episodes", cate_level2_desc: "TV UHD Episodes" }
+  - { id: 49, cate_level1: TV, cate_level2: "Movies/TV-UHD-episodes", cate_level2_desc: "Movies/TV-UHD-episodes" }
+  - { id: 23, cate_level1: Music, cate_level2: "Music/MP3", cate_level2_desc: "Music/MP3" }
+  - { id: 25, cate_level1: Music, cate_level2: "Music/FLAC", cate_level2_desc: "Music/FLAC" }
+  - { id: 27, cate_level1: Game, cate_level2: "Games/PC ISO", cate_level2_desc: "Games/PC ISO" }
+  - { id: 28, cate_level1: Game, cate_level2: "Games/PC RIP", cate_level2_desc: "Games/PC RIP" }
+  - { id: 33, cate_level1: Other, cate_level2: "Software/PC ISO", cate_level2_desc: "Software/PC ISO" }
+  - { id: 53, cate_level1: Game, cate_level2: "Games/PS4", cate_level2_desc: "Games/PS4" }

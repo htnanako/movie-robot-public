@@ -1,0 +1,160 @@
+id: filelist
+name: filelist
+domain: https://filelist.io/
+encoding: UTF-8
+config_url: https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/filelist.yml
+version: 20220913
+
+sub_search_value_type:
+  - imdb_id
+login:
+  test:
+    selector: a[href^="/index.php"]
+
+category_mappings:
+  - { id: 24, cate_level1: Anime, cate_level2: "Anime" , cate_level2_desc: "Anime" }
+  - { id: 11, cate_level1: Music, cate_level2: "Music/Audio" , cate_level2_desc: "Audio" }
+  - { id: 15, cate_level1: Anime, cate_level2: "Anime" , cate_level2_desc: "Desene" }
+  - { id: 18, cate_level1: Other, cate_level2: "Other" , cate_level2_desc: "Diverse" }
+  - { id: 16, cate_level1: Documentary, cate_level2: "Documentary" , cate_level2_desc: "Docs" }
+  - { id: 25, cate_level1: Movie, cate_level2: "Movie/3D" , cate_level2_desc: "Filme 3D" }
+  - { id: 6, cate_level1: Movie, cate_level2: "Movie/4k" , cate_level2_desc: "Filme 4K" }
+  - { id: 26, cate_level1: Movie, cate_level2: "Movie/4k/Blu-Ray" , cate_level2_desc: "Filme 4K Blu-Ray" }
+  - { id: 20, cate_level1: Movie, cate_level2: "Movie/Bl-Ray" , cate_level2_desc: "Filme Blu-Ray" }
+  - { id: 2, cate_level1: Movie, cate_level2: "Movie/DVD" , cate_level2_desc: "Filme DVD" }
+  - { id: 3, cate_level1: Movie, cate_level2: "Movie/DVD-RO" , cate_level2_desc: "Filme DVD-RO" }
+  - { id: 4, cate_level1: Movie, cate_level2: "Movie/HD" , cate_level2_desc: "Filme HD" }
+  - { id: 19, cate_level1: Movie, cate_level2: "Movie/HD-R0" , cate_level2_desc: "Filme HD-RO" }
+  - { id: 1, cate_level1: Movie, cate_level2: "Movie/SD" , cate_level2_desc: "Filme SD" }
+  - { id: 5, cate_level1: Music, cate_level2: "Music/FLAC" , cate_level2_desc: "FLAC" }
+  - { id: 10, cate_level1: Game, cate_level2: "Game" , cate_level2_desc: "Jocuri Console" }
+  - { id: 9, cate_level1: Game, cate_level2: "Game/PC" , cate_level2_desc: "Jocuri PC" }
+  - { id: 17, cate_level1: Other, cate_level2: "Other" , cate_level2_desc: " Linux" }
+  - { id: 22, cate_level1: Other, cate_level2: "Other" , cate_level2_desc: "Mobile" }
+  - { id: 8, cate_level1: Other, cate_level2: "Other" , cate_level2_desc: "Programe" }
+  - { id: 27, cate_level1: Movie, cate_level2: "Movie/4k" , cate_level2_desc: "Seriale 4K" }
+  - { id: 21, cate_level1: Movie, cate_level2: "Movie/HD" , cate_level2_desc: "Seriale HD" }
+  - { id: 23, cate_level1: Movie, cate_level2: "Movie/SD" , cate_level2_desc: "Seriale SD" }
+  - { id: 13, cate_level1: TV, cate_level2: "TV/Sport" , cate_level2_desc: "Sport" }
+  - { id: 12, cate_level1: Video, cate_level2: "Video" , cate_level2_desc: "Videoclip" }
+  - { id: 7, cate_level1: AV, cate_level2: "XXX" , cate_level2_desc: "XXX" }
+
+userinfo:
+  path: https://filelist.io/browse.php
+  item:
+    selector: div.statusbar
+  fields:
+    uid:
+      default_value: 0
+      selector: a[href^="/userdetails.php?id="]
+      attribute: href
+      filters:
+        - name: re_search
+          args: [ '\d+', 0 ]
+    user_group:
+      selector: div[style="padding:1px;"] > font
+    username:
+      default_value: '未知用户名'
+      selector: a[href^="/userdetails.php?id="] > span
+    uploaded:
+      default_value: 0
+      selector: span:has(> img[src="/styles/images/uploaded.png"])
+      remove: font
+      filters:
+        - name: replace
+          args: [':','']
+    downloaded:
+      default_value: 0
+      selector: span:has(> img[src="/styles/images/downloaded.png"])
+      remove: font
+      filters:
+        - name: replace
+          args: [ ':','' ]
+    share_ratio:
+      default_value: 'inf'
+      selector: span:has(> img[src="/styles/images/ratio.png"])
+      remove: font
+      filters:
+        - name: replace
+          args: [ ':','' ]
+        - name: replace
+          args: [ '---','inf' ]
+    seeding:
+       text: 0
+    leeching:
+       text: 0
+    vip_group:
+      case:
+        a[class^="VIP"]: true
+        "*": false
+search:
+  paths:
+    - path: browse.php
+      method: get
+  query:
+    searchin: "{% if query.imdb_id %}3{% else %}1{%endif%}"
+    search: "{% if query.imdb_id %}{{query.imdb_id}}{%else%}{{query.keyword}}{% endif %}"
+    incldead: 0
+    sort: "{{ query.sort }}"
+    page: "{{ query.page }}"
+
+torrents:
+  list:
+    selector: div.visitedlinks > div.torrentrow
+  fields:
+    id:
+      selector: a[href^="details.php?id="]
+      attribute: href
+      filters:
+        - name: re_search
+          args: [ '\d+', 0 ]
+    title:
+      selector: a[href^="details.php?id="]
+      attribute: title
+    poster:
+      selector: span[data-toggle="tooltip"]
+      attribute: title
+      filters:
+        - name: re_search
+          args: ["<img src='([^']+)'>", 1]
+    category:
+      selector: a[href^="browse.php?cat="]
+      attribute: href
+      filters:
+        - name: querystring
+          args: cat
+    details:
+      selector: a[href^="details.php?id="]
+      attribute: href
+    download:
+      selector: a[href^="download.php?id="]
+      attribute: href
+    date:
+      selector: div:nth-child(6)
+      filters:
+        - name: dateparse
+          args: "%H:%M:%S%d/%m/%Y"
+    size:
+      selector: div:nth-child(7)
+    seeders:
+      selector: div:nth-child(9)
+    leechers:
+      selector: div:nth-child(10)
+    grabs:
+      selector: div:nth-child(8) > span > font
+      contents: 0
+    downloadvolumefactor:
+      case:
+        img[alt="FreeLeech"]: 0
+        "*": 1
+    uploadvolumefactor:
+      case:
+        img[alt="DoubleUp"]: 2
+        "*": 1
+    free_deadline:
+      default_value: "{% if fields['downloadvolumefactor']==0 %}{{max_time}}{% endif%}"
+      default_value_format: '%Y-%m-%d %H:%M:%S.%f'
+    minimumratio:
+      text: 1
+    minimumseedtime:
+      text: 172800

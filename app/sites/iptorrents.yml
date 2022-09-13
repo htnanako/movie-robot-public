@@ -1,0 +1,184 @@
+id: iptorrents
+name: iptorrents
+domain: https://iptorrents.com/
+encoding: UTF-8
+config_url: https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/iptorrents.yml
+version: 20220913
+
+sub_search_value_type:
+  - imdb_id
+login:
+  test:
+    selector: a[href^="/u/"]
+
+category_mappings:
+  - { id: 72, cate_level1: Movie, cate_level2: "Movies" , cate_level2_desc: "Movies" }
+  - { id: 87, cate_level1: Movie, cate_level2: "Movie/3D" , cate_level2_desc: "Movie/3D" }
+  - { id: 77, cate_level1: Movie, cate_level2: "Movie/480p" , cate_level2_desc: "Movie/480p" }
+  - { id: 101, cate_level1: Movie, cate_level2: "Movie/4K" , cate_level2_desc: "Movie/4K" }
+  - { id: 89, cate_level1: Movie, cate_level2: "Movie/BD-R" , cate_level2_desc: "Movie/BD-R" }
+  - { id: 90, cate_level1: Movie, cate_level2: "Movie/BD-Rip" , cate_level2_desc: "Movie/BD-Rip" }
+  - { id: 96, cate_level1: Movie, cate_level2: "Movie/Cam" , cate_level2_desc: "Movie/Cam" }
+  - { id: 6, cate_level1: Movie, cate_level2: "Movie/DVD-R" , cate_level2_desc: "Movie/DVD-R" }
+  - { id: 48, cate_level1: Movie, cate_level2: "Movie/HD/Bluray" , cate_level2_desc: "Movie/HD/Bluray" }
+  - { id: 54, cate_level1: Movie, cate_level2: "Movie/Kids" , cate_level2_desc: "Movie/Kids" }
+  - { id: 62, cate_level1: Movie, cate_level2: "Movie/MP4" , cate_level2_desc: "Movie/MP4" }
+  - { id: 38, cate_level1: Movie, cate_level2: "Movie/Non-English" , cate_level2_desc: "Movie/Non-English" }
+  - { id: 68, cate_level1: Movie, cate_level2: "Movie/Packs" , cate_level2_desc: "Movie/Packs" }
+  - { id: 20, cate_level1: Movie, cate_level2: "Movie/Web-DL" , cate_level2_desc: "Movie/Web-DL" }
+  - { id: 100, cate_level1: Movie, cate_level2: "Movie/x265" , cate_level2_desc: "Movie/x265" }
+  - { id: 7, cate_level1: Movie, cate_level2: "Movie/Xvid" , cate_level2_desc: "Movie/Xvid" }
+  - { id: 73, cate_level1: TV, cate_level2: "TV" , cate_level2_desc: "TV" }
+  - { id: 26, cate_level1: Documentary, cate_level2: "Documentaries" , cate_level2_desc: "Documentaries" }
+  - { id: 55, cate_level1: Other, cate_level2: "Sports" , cate_level2_desc: "Sports" }
+  - { id: 78, cate_level1: TV, cate_level2: "TV/480p" , cate_level2_desc: "TV/480p" }
+  - { id: 23, cate_level1: TV, cate_level2: "TV/BD" , cate_level2_desc: "TV/BD" }
+  - { id: 24, cate_level1: TV, cate_level2: "TV/DVD-R" , cate_level2_desc: "TV/DVD-R" }
+  - { id: 25, cate_level1: TV, cate_level2: "TV/DVD-Rip" , cate_level2_desc: "TV/DVD-Rip" }
+  - { id: 66, cate_level1: TV, cate_level2: "TV/Mobile" , cate_level2_desc: "TV/Mobile" }
+  - { id: 82, cate_level1: TV, cate_level2: "TV/Non-English" , cate_level2_desc: "TV/Non-English" }
+  - { id: 65, cate_level1: TV, cate_level2: "TV/Packs" , cate_level2_desc: "TV/Packs" }
+  - { id: 83, cate_level1: TV, cate_level2: "TV/Packs/Non-English" , cate_level2_desc: "TV/Packs/Non-English" }
+  - { id: 79, cate_level1: TV, cate_level2: "TV/SD/x264" , cate_level2_desc: "TV/SD/x264" }
+  - { id: 22, cate_level1: TV, cate_level2: "TV/Web-DL" , cate_level2_desc: "TV/Web-DL" }
+  - { id: 5, cate_level1: TV, cate_level2: "TV/x264" , cate_level2_desc: "TV/x264" }
+  - { id: 99, cate_level1: TV, cate_level2: "TV/x265" , cate_level2_desc: "TV/x265" }
+  - { id: 4, cate_level1: TV, cate_level2: "TV/Xvid" , cate_level2_desc: "TV/Xvid" }
+  - { id: 74, cate_level1: Game, cate_level2: "Games" , cate_level2_desc: "Games" }
+  - { id: 2, cate_level1: Game, cate_level2: "Games/Mixed" , cate_level2_desc: "Games/Mixed" }
+  - { id: 47, cate_level1: Game, cate_level2: "Games/Nintendo" , cate_level2_desc: "Games/Nintendo" }
+  - { id: 43, cate_level1: Game, cate_level2: "Games/PC-ISO" , cate_level2_desc: "Games/PC-ISO" }
+  - { id: 45, cate_level1: Game, cate_level2: "Games/PC-Rip" , cate_level2_desc: "Games/PC-Rip" }
+  - { id: 71, cate_level1: Game, cate_level2: "Games/Playstation" , cate_level2_desc: "Games/Playstation" }
+  - { id: 50, cate_level1: Game, cate_level2: "Games/Wii" , cate_level2_desc: "Games/Wii" }
+  - { id: 44, cate_level1: Game, cate_level2: "Games/Xbox" , cate_level2_desc: "Games/Xbox" }
+  - { id: 75, cate_level1: Music, cate_level2: "Music" , cate_level2_desc: "Music" }
+  - { id: 3, cate_level1: Music, cate_level2: "Music/Audio" , cate_level2_desc: "Music/Audio" }
+  - { id: 80, cate_level1: Music, cate_level2: "Music/Flac" , cate_level2_desc: "Music/Flac" }
+  - { id: 93, cate_level1: Music, cate_level2: "Music/Packs" , cate_level2_desc: "Music/Packs" }
+  - { id: 37, cate_level1: Music, cate_level2: "Music/Video" , cate_level2_desc: "Music/Video" }
+  - { id: 21, cate_level1: Music, cate_level2: "Podcast" , cate_level2_desc: "Podcast" }
+  - { id: 64, cate_level1: Other, cate_level2: "AudioBook" , cate_level2_desc: "AudioBook" }
+  - { id: 35, cate_level1: Other, cate_level2: "Books" , cate_level2_desc: "Books" }
+  - { id: 102, cate_level1: Other, cate_level2: "Books/Non-English" , cate_level2_desc: "Books/Non-English" }
+  - { id: 76, cate_level1: Other, cate_level2: "Miscellaneous" , cate_level2_desc: "Miscellaneous" }
+  - { id: 1, cate_level1: Other, cate_level2: "Appz" , cate_level2_desc: "Appz" }
+  - { id: 86, cate_level1: Other, cate_level2: "Appz/Non-English" , cate_level2_desc: "Appz/Non-English" }
+  - { id: 60, cate_level1: Anime, cate_level2: "Anime" , cate_level2_desc: "Anime" }
+  - { id: 94, cate_level1: Other, cate_level2: "Comics" , cate_level2_desc: "Comics" }
+  - { id: 95, cate_level1: Other, cate_level2: "Educational" , cate_level2_desc: "Educational" }
+  - { id: 98, cate_level1: Other, cate_level2: "Fonts" , cate_level2_desc: "Fonts" }
+  - { id: 69, cate_level1: Other, cate_level2: "Mac" , cate_level2_desc: "Mac" }
+  - { id: 92, cate_level1: Other, cate_level2: "Magazines / Newspapers" , cate_level2_desc: "Magazines / Newspapers" }
+  - { id: 58, cate_level1: Other, cate_level2: "Mobile" , cate_level2_desc: "Mobile" }
+  - { id: 36, cate_level1: Other, cate_level2: "Pics/Wallpapers" , cate_level2_desc: "Pics/Wallpapers" }
+  - { id: 88, cate_level1: AV, cate_level2: "XXX" , cate_level2_desc: "XXX" }
+  - { id: 85, cate_level1: AV, cate_level2: "XXX/Magazines" , cate_level2_desc: "XXX/Magazines" }
+  - { id: 8, cate_level1: AV, cate_level2: "XXX/Movie" , cate_level2_desc: "XXX/Movie" }
+  - { id: 81, cate_level1: AV, cate_level2: "XXX/Movie/0Day" , cate_level2_desc: "XXX/Movie/0Day" }
+  - { id: 91, cate_level1: AV, cate_level2: "XXX/Packs" , cate_level2_desc: "XXX/Packs" }
+  - { id: 84, cate_level1: AV, cate_level2: "XXX/Pics/Wallpapers" , cate_level2_desc: "XXX/Pics/Wallpapers" }
+
+userinfo:
+  path: https://iptorrents.com/indexipt.php
+  item:
+    selector: div.stats
+  fields:
+    uid:
+      default_value: 0
+      selector: a[href^="/u/"]
+      attribute: href
+      filters:
+        - name: re_search
+          args: [ '\d+', 0 ]
+    user_group:
+      text: 'user'
+    username:
+      default_value: '未知用户名'
+      selector: a[href^="/u/"]
+      remove: div
+    uploaded:
+      default_value: 0
+      selector: span.tTipWrap:has(> i.fa-upload)
+      remove: div
+    downloaded:
+      default_value: 0
+      selector: span.tTipWrap:has(> i.fa-download)
+      remove: div
+    seeding:
+      default_value: 0
+      selector: a[href^="/peers?u="]
+      contents: 2
+    leeching:
+      default_value: 0
+      selector: a[href^="/peers?u="]
+      method: -1
+    vip_group:
+      case:
+        a[class^="VIP"]: true
+        "*": false
+search:
+  paths:
+    - path: t
+      method: get
+  query:
+    $raw: "{% for c in query.cates %}cat{{c}}=&{% endfor %}"
+    q: "{% if query.imdb_id %}{{query.imdb_id}}{%else%}{{query.keyword}}{% endif %}"
+    o: "{{ query.sort }}"
+    p: "{{ query.page }}"
+
+torrents:
+  list:
+    selector: table[id="torrents"] > tbody > tr:has(> td.al)
+  fields:
+    id:
+      selector: a[href^="/t/"]
+      attribute: href
+      filters:
+        - name: re_search
+          args: [ '\d+', 0 ]
+    title:
+      selector: a[href^="/t/"]
+      contents: 0
+    category:
+      selector: a[href^="?"]:has(> img)
+      attribute: href
+      filters:
+        - name: replace
+          args: [ "?", "" ]
+    details:
+      selector: a[href^="/t/"]
+      attribute: href
+    download:
+      selector: a[href^="/download.php/"]
+      attribute: href
+      filters:
+        - name: lstrip
+          args: ['/']
+    date:
+      selector: td:nth-child(2) > div
+      filters:
+        - name: split
+          args: [ '|',1 ]
+        - name: date_en_elapsed_parse
+    size:
+      selector: td:nth-child(6)
+    seeders:
+      selector: td:nth-child(8)
+    leechers:
+      selector: td:nth-child(9)
+    grabs:
+      selector: td:nth-child(7)
+    downloadvolumefactor:
+      case:
+        span.free: 0
+        "*": 1
+    uploadvolumefactor:
+      text: 1
+    free_deadline:
+      default_value: "{% if fields['downloadvolumefactor']==0 %}{{max_time}}{% endif%}"
+      default_value_format: '%Y-%m-%d %H:%M:%S.%f'
+    minimumratio:
+      text: 1
+    minimumseedtime:
+      text: 1209600

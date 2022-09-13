@@ -1,32 +1,27 @@
-id: pterclub
-name: 猫站
-domain: https://pterclub.com/
+id: beitai
+name: 备胎
+domain: https://www.beitai.pt/
 encoding: UTF-8
-config_url: https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/pterclub.yml
+config_url: https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/beitai.yml
 version: 20220913
 
 login:
   test:
-    selector: a[data-url="logout.php"]
+    selector: a[href="logout.php"]
 
 category_mappings:
-  - { id: 401, cate_level1: Movie, cate_level2: "Movies/电影", cate_level2_desc: "Movies/电影" }
-  - { id: 404, cate_level1: TV, cate_level2: "电视剧 (TV Series)", cate_level2_desc: "电视剧 (TV Series)" }
-  - { id: 403, cate_level1: Anime, cate_level2: "动漫 (Anime)", cate_level2_desc: "动漫 (Anime)" }
-  - { id: 405, cate_level1: TV, cate_level2: "综艺 (TV Show)", cate_level2_desc: "综艺 (TV Show)" }
-  - { id: 413, cate_level1: Music, cate_level2: "音乐短片 (MV)", cate_level2_desc: "音乐短片 (MV)" }
-  - { id: 406, cate_level1: Music, cate_level2: "音乐 (Music)", cate_level2_desc: "音乐 (Music)" }
-  - { id: 418, cate_level1: Music, cate_level2: "舞台演出(Stage Performance)", cate_level2_desc: "舞台演出(Stage Performance)" }
-  - { id: 402, cate_level1: Documentary, cate_level2: "纪录片 (Documentary)", cate_level2_desc: "纪录片 (Documentary)" }
-  - { id: 407, cate_level1: TV, cate_level2: "体育 (Sport)", cate_level2_desc: "体育 (Sport)" }
-  - { id: 408, cate_level1: Other, cate_level2: "电子书 (Ebook)", cate_level2_desc: "电子书 (Ebook)" }
-  - { id: 409, cate_level1: Game, cate_level2: "游戏 (Game)", cate_level2_desc: "游戏 (Game)" }
-  - { id: 410, cate_level1: Other, cate_level2: "软件 (Software)", cate_level2_desc: "软件 (Software)" }
-  - { id: 411, cate_level1: Other, cate_level2: "学习 (Study)", cate_level2_desc: "学习 (Study)" }
-  - { id: 412, cate_level1: Other, cate_level2: "其它 (Other)", cate_level2_desc: "其它 (Other)" }
+  - { id: 401, cate_level1: Movie, cate_level2: Movies, cate_level2_desc: "Movies/电影" }
+  - { id: 404, cate_level1: Documentary, cate_level2: TV/Documentary, cate_level2_desc: "Documentaries/纪录片" }
+  - { id: 405, cate_level1: Anime , cate_level2: TV/Anime, cate_level2_desc: "Animations/动漫" }
+  - { id: 402, cate_level1: TV, cate_level2: TV, cate_level2_desc: "TV Series/剧集" }
+  - { id: 403, cate_level1: TV, cate_level2: TV, cate_level2_desc: "TV Shows/综艺" }
+  - { id: 406, cate_level1: Music, cate_level2: Audio/Video, cate_level2_desc: "MusicVideo/音乐MV" }
+  - { id: 407, cate_level1: TV, cate_level2: TV/Sport, cate_level2_desc: "Sports/运体" }
+  - { id: 409, cate_level1: Other, cate_level2: Other, cate_level2_desc: "Misc/其他" }
+  - { id: 408, cate_level1: Music, cate_level2: Audio,cate_level2_ desc: "HQ Audio/无损音乐" }
 
 userinfo:
-  path: https://pterclub.com/index.php
+  path: https://www.beitai.pt/index.php
   item:
     selector: table[id="info_block"]
   fields:
@@ -106,12 +101,6 @@ torrents:
       filters:
         - name: re_search
           args: [ '\d+', 0 ]
-    category:
-      selector: a[href^="?cat="]
-      attribute: href
-      filters:
-        - name: querystring
-          args: cat
     title_default:
       selector: a[href^="details.php?id="]
     title_optional:
@@ -120,37 +109,48 @@ torrents:
       attribute: title
     title:
       text: "{% if fields['title_optional'] %}{{ fields['title_optional'] }}{% else %}{{ fields['title_default'] }}{% endif %}"
+    category:
+      selector: a[href^="?cat="]
+      attribute: href
+      filters:
+        - name: replace
+          args: [ "?", "" ]
+        - name: querystring
+          args: cat
     details:
       selector: a[href^="details.php?id="]
       attribute: href
-    poster:
-      selector: img[data-orig]
-      attribute: data-orig
     download:
       selector: a[href^="download.php?id="]
       attribute: href
-    size:
-      selector: td.rowfollow:nth-child(5)
-    grabs:
-      selector: td.rowfollow:nth-child(8)
-    seeders:
-      selector: td.rowfollow:nth-child(6)
-    leechers:
-      selector: td.rowfollow:nth-child(7)
+    imdbid:
+      selector: div.imdb_100 > a
+      attribute: href
+      filters:
+        - name: re_search
+          args: [ 'tt\d+',0 ]
     date_elapsed:
-      # time type: time elapsed (default)
-      selector: td.rowfollow:nth-child(4) > span[title]
+      # 站点设置，已去时间 (默认)
+      selector: td:nth-child(4) > span[title]
       attribute: title
       optional: true
     date_added:
-      # time added
-      selector: td.rowfollow:nth-child(4):not(:has(span))
+      # 站点设置，实际时间
+      selector: td:nth-child(4):not(:has(span))
       optional: true
     date:
       text: "{% if fields['date_elapsed'] or fields['date_added'] %}{{ fields['date_elapsed'] if fields['date_elapsed'] else fields['date_added'] }}{% else %}now{% endif %}"
       filters:
         - name: dateparse
           args: "%Y-%m-%d %H:%M:%S"
+    size:
+      selector: td:nth-child(5)
+    seeders:
+      selector: td:nth-child(6)
+    leechers:
+      selector: td:nth-child(7)
+    grabs:
+      selector: td:nth-child(8)
     downloadvolumefactor:
       case:
         img.pro_free: 0
@@ -168,15 +168,13 @@ torrents:
     free_deadline:
       default_value: "{% if fields['downloadvolumefactor']==0 %}{{max_time}}{% endif%}"
       default_value_format: '%Y-%m-%d %H:%M:%S.%f'
-      selector: 'div > b > span[title]'
-      attribute: title
+      selector: img.pro_free,img.pro_free2up
+      attribute: onmouseover
       filters:
+        - name: re_search
+          args: [ '\d+-\d+-\d+ \d+:\d+:\d+', 0 ]
         - name: dateparse
           args: "%Y-%m-%d %H:%M:%S"
-    tags:
-      selectors: div > a.torrents-tag
-    subject:
-      selector: td.embedded:nth-child(2) > div > div[style] > span
-      contents: -1
     description:
-      text: "{% if fields['tags']%}{{ fields['subject']+' '+fields['tags']|join(' ') }}{% else %}{{ fields['subject'] }}{% endif %}"
+      selector: td:nth-child(2) > table > tr > td.embedded
+      contents: -1

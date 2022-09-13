@@ -1,29 +1,30 @@
-id: ssd
-name: 不可说
-domain: https://springsunday.net/
+id: hares
+name: 白兔
+domain: https://club.hares.top/
 encoding: UTF-8
-config_url: https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/springsunday.yml
+config_url: https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/hares.yml
 version: 20220913
 
 login:
   test:
-    selector: a[href="logout.php"]
+    selector: a[href="index.html"]
 
 category_mappings:
-  - { id: 501, cate_level1: Movie, cate_level2 Movies, cate_level2_desc: "Movies(电影)" }
-  - { id: 502, cate_level1: TV, cate_level2 TV, cate_level2_desc: "TV Series(剧集)" }
-  - { id: 503, cate_level1: Documentary, cate_level2 TV/Documentary, cate_level2_desc: "Docs(纪录)" }
-  - { id: 504, cate_level1: Anime, cate_level2 TV/Anime, cate_level2_desc: "Animations(动画)" }
-  - { id: 505, cate_level1: TV, cate_level2 TV, cate_level2_desc: "TV Shows(综艺)" }
-  - { id: 506, cate_level1: TV, cate_level2 TV/Sport, cate_level2_desc: "Sports(体育)" }
-  - { id: 507, cate_level1: Music, cate_level2 Audio/Video, cate_level2_desc: "MV(音乐视频)" }
-  - { id: 508, cate_level1: Music, cate_level2 Audio, cate_level2_desc: "Music(音乐)" }
-  - { id: 509, cate_level1: Other, cate_level2 Other, cate_level2_desc: "Others(其他)" }
+  - { id: 401, cate_level1: Movie, cate_level2: Movies, cate_level2_desc: "Movies | 电影" }
+  - { id: 402, cate_level1: TV, cate_level2: TV, cate_level2_desc: "TV Series | 电视剧" }
+  - { id: 403, cate_level1: TV, cate_level2: TV, cate_level2_desc: "TV Shows | 综艺" }
+  - { id: 404, cate_level1: Documentary, cate_level2: TV/Documentary, cate_level2_desc: "Documentaries | 纪录片" }
+  - { id: 405, cate_level1: Anime , cate_level2: TV/Anime, cate_level2_desc: "Animations | 动漫" }
+  - { id: 406, cate_level1: Music, cate_level2: Audio/Video, cate_level2_desc: "Music Videos | 音乐视频" }
+  - { id: 407, cate_level1: TV, cate_level2: TV/Sport, cate_level2_desc: "Sports | 体育" }
+  - { id: 409, cate_level1: Music, cate_level2: Audio/Video, cate_level2_desc: "Concert | 演唱会" }
+  - { id: 416, cate_level1: Music, cate_level2: Audio/Video, cate_level2_desc: "Show LIVE | 现场LIVE" }
+  - { id: 415, cate_level1: Other, cate_level2: Other,cate_level2_ desc: "Others | 其他" }
 
 userinfo:
-  path: https://springsunday.net/rules.php
+  path: https://club.hares.top/index.php
   item:
-    selector: div[id="info_block"]
+    selector: body
   fields:
     uid:
       default_value: 0
@@ -33,41 +34,38 @@ userinfo:
         - name: re_search
           args: [ '\d+', 0 ]
     user_group:
-      default_value: ''
-      selector: a[href^="userdetails.php?id="]
-      attribute: class
+      default_value: 'User'
+      selector: li:has(> i[title="等级"])
     username:
       default_value: '未知用户名'
-      selector: a[href^="userdetails.php?id="]
+      selector: a[href^="userdetails.php"]:has(> img)
     share_ratio:
-      default_value: ''
-      selector: font[class="color_ratio"]
-      method: next_sibling
+      default_value: 0
+      selector: li:has(> i[title="分享率"])
       filters:
         - name: replace
           args: [ '无限','inf' ]
+        - name: replace
+          args: [ '---','inf' ]
     uploaded:
       default_value: 0
-      selector: font[class="color_uploaded"]
-      method: next_sibling
+      selector: li:has(> i[title="上传量"]) > span
       filters:
         - name: replace
           args: [ '无限','inf' ]
     downloaded:
       default_value: 0
-      selector: font[class="color_downloaded"]
-      method: next_sibling
+      selector: li:has(> i[title="下载量"]) > span
       filters:
         - name: replace
           args: [ '无限','inf' ]
     seeding:
       default_value: 0
-      selector: img[alt="Torrents seeding"]
-      method: next_sibling
+      selector: li:has(> i[title="做种中"]) > span
     leeching:
       default_value: 0
-      selector: img[alt="Torrents leeching"]
-      method: next_sibling
+      selector: li:has(> i[title="下载中"]) > span
+      # method: next_sibling
     vip_group:
       case:
         a[class^="VIP"]: true
@@ -87,15 +85,13 @@ search:
     search_area: "{% if query.imdb_id %}4{% else %}0{%endif%}"
     # 0 AND, 1 OR, 2 exact
     search_mode: 0
-    # 0 all, 1 popular, 2 classic, 3 recomended, 4 2+3
-    pick: 0
     sort: "{{ query.sort }}"
     type: "{{ query.type }}"
     page: "{{ query.page }}"
 
 torrents:
   list:
-    selector: table.torrents > tr:has(table.torrentname)
+    selector: table.torrents > tr
   fields:
     id:
       selector: a[href^="details.php?id="]
@@ -103,12 +99,6 @@ torrents:
       filters:
         - name: re_search
           args: [ '\d+', 0 ]
-    category:
-      selector: a[href^="?cat="]
-      attribute: href
-      filters:
-        - name: querystring
-          args: cat
     title_default:
       selector: a[href^="details.php?id="]
     title_optional:
@@ -117,26 +107,28 @@ torrents:
       attribute: title
     title:
       text: "{% if fields['title_optional'] %}{{ fields['title_optional'] }}{% else %}{{ fields['title_default'] }}{% endif %}"
+    category:
+      selector: a[href^="?cat="]
+      attribute: href
+      filters:
+        - name: replace
+          args: [ "?", "" ]
+        - name: querystring
+          args: cat
     details:
       selector: a[href^="details.php?id="]
       attribute: href
     download:
       selector: a[href^="download.php?id="]
       attribute: href
-    imdbid:
-      selector: a[href*="imdb.com/title/tt"]
-      attribute: href
-      filters:
-        - name: re_search
-          args: [ 'tt\d+',0 ]
     date_elapsed:
-      # time type: time elapsed (default)
-      selector: td.rowfollow:nth-last-child(6) > span[title]
+      # 站点设置，已去时间 (默认)
+      selector: td:nth-child(4) > span[title]
       attribute: title
       optional: true
     date_added:
-      # time added
-      selector: td.rowfollow:nth-last-child(6):not(:has(span))
+      # 站点设置，实际时间
+      selector: td:nth-child(4):not(:has(span))
       optional: true
     date:
       text: "{% if fields['date_elapsed'] or fields['date_added'] %}{{ fields['date_elapsed'] if fields['date_elapsed'] else fields['date_added'] }}{% else %}now{% endif %}"
@@ -144,13 +136,13 @@ torrents:
         - name: dateparse
           args: "%Y-%m-%d %H:%M:%S"
     size:
-      selector: td.rowfollow:nth-last-child(5)
+      selector: td:nth-child(5)
     seeders:
-      selector: td.rowfollow:nth-last-child(4)
+      selector: td:nth-child(6)
     leechers:
-      selector: td.rowfollow:nth-last-child(3)
+      selector: td:nth-child(7)
     grabs:
-      selector: td.rowfollow:nth-last-child(2)
+      selector: td:nth-child(8)
     downloadvolumefactor:
       case:
         img.pro_free: 0
@@ -168,14 +160,12 @@ torrents:
     free_deadline:
       default_value: "{% if fields['downloadvolumefactor']==0 %}{{max_time}}{% endif%}"
       default_value_format: '%Y-%m-%d %H:%M:%S.%f'
-      selector: img.pro_free,img.pro_free2up
-      attribute: onmouseover
+      selector: img.pro_free,img.pro_free2up,img.pro_50pctdown,img.pro_50pctdown2up,img.pro_30pctdown
+      attribute: data-d
       filters:
         - name: re_search
-          args: [ '\d+-\d+-\d+ \d+:\d+:\d+', 0 ]
+          args: [ '\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}',0 ]
         - name: dateparse
           args: "%Y-%m-%d %H:%M:%S"
     description:
-      selector: table.torrentname > tr > td
-      remove: a, b, img, span
-      contents: -1
+      selector: div.layui-torrents-Subject > div.left > p.layui-elip.layui-torrents-descr-width
