@@ -1,0 +1,193 @@
+id: ttg
+name: 听听歌
+domain: https://totheglory.im/
+encoding: UTF-8
+config_url: https://raw.githubusercontent.com/htnanako/movie-robot-sites/main/app/sites/totheglory.yml
+
+login:
+  test:
+    selector: a[href="/logout.php"]
+
+category_mappings:
+  - { id: "电影DVDRip", cate_level1: Movie,cate_level2: "电影DVDRip", cate_level2_desc: "电影DVDRip" }
+  - { id: "电影720p", cate_level1: Movie,cate_level2: "电影720p", cate_level2_desc: "电影720p" }
+  - { id: "电影1080i/p", cate_level1: Movie,cate_level2: "电影1080i/p", cate_level2_desc: "电影1080i/p" }
+  - { id: "BluRay原盘", cate_level1: Movie,cate_level2: "BluRay原盘", cate_level2_desc: "BluRay原盘" }
+  - { id: "影视2160p", cate_level1: "*",cate_level2: "影视2160p", cate_level2_desc: "影视2160p" }
+  - { id: "UHD原盘", cate_level1: Movie,cate_level2: "UHD原盘", cate_level2_desc: "UHD原盘" }
+  - { id: "纪录片720p", cate_level1: Documentary,cate_level2: "纪录片720p", cate_level2_desc: "纪录片720p" }
+  - { id: "纪录片1080i/p", cate_level1: Documentary,cate_level2: "纪录片1080i/p", cate_level2_desc: "纪录片1080i/p" }
+  - { id: "纪录片BluRay原盘", cate_level1: Documentary,cate_level2: "纪录片BluRay原盘", cate_level2_desc: "纪录片BluRay原盘" }
+  - { id: "欧美剧720p", cate_level1: TV,cate_level2: "欧美剧720p", cate_level2_desc: "欧美剧720p" }
+  - { id: "欧美剧1080i/p", cate_level1: TV,cate_level2: "欧美剧1080i/p", cate_level2_desc: "欧美剧1080i/p" }
+  - { id: "高清日剧", cate_level1: TV,cate_level2: "高清日剧", cate_level2_desc: "高清日剧" }
+  - { id: "大陆港台剧720p", cate_level1: TV,cate_level2: "大陆港台剧720p", cate_level2_desc: "大陆港台剧720p" }
+  - { id: "高清韩剧", cate_level1: TV,cate_level2: "高清韩剧", cate_level2_desc: "高清韩剧" }
+  - { id: "大陆港台剧1080i/p", cate_level1: TV,cate_level2: "大陆港台剧1080i/p", cate_level2_desc: "大陆港台剧1080i/p" }
+  - { id: "欧美剧包", cate_level1: TV,cate_level2: "欧美剧包", cate_level2_desc: "欧美剧包" }
+  - { id: "日剧包", cate_level1: TV,cate_level2: "日剧包", cate_level2_desc: "日剧包" }
+  - { id: "华语剧包", cate_level1: TV,cate_level2: "华语剧包", cate_level2_desc: "华语剧包" }
+  - { id: "韩剧包", cate_level1: TV,cate_level2: "韩剧包", cate_level2_desc: "韩剧包" }
+  - { id: "(电影原声&Game)OST", cate_level1: Music,cate_level2: "(电影原声&Game)OST", cate_level2_desc: "(电影原声&Game)OST" }
+  - { id: "无损音乐FLAC&APE", cate_level1: Music,cate_level2: "无损音乐FLAC&APE", cate_level2_desc: "无损音乐FLAC&APE" }
+  - { id: "MV&演唱会", cate_level1: Music,cate_level2: "MV&演唱会", cate_level2_desc: "MV&演唱会" }
+  - { id: "高清体育节目", cate_level1: TV,cate_level2: "高清体育节目", cate_level2_desc: "高清体育节目" }
+  - { id: "高清动漫", cate_level1: Anime,cate_level2: "高清动漫", cate_level2_desc: "高清动漫" }
+  - { id: "韩国综艺", cate_level1: TV,cate_level2: "韩国综艺", cate_level2_desc: "韩国综艺" }
+  - { id: "日本综艺", cate_level1: TV,cate_level2: "日本综艺", cate_level2_desc: "日本综艺" }
+  - { id: "高清综艺", cate_level1: TV,cate_level2: "高清综艺", cate_level2_desc: "高清综艺" }
+  - { id: "MiniVideo", cate_level1: Other,cate_level2: "MiniVideo", cate_level2_desc: "MiniVideo" }
+  - { id: "补充音轨", cate_level1: Music,cate_level2: "补充音轨", cate_level2_desc: "补充音轨" }
+  - { id: "iPhone/iPad视频", cate_level1: Movie,cate_level2: "iPhone/iPad视频", cate_level2_desc: "iPhone/iPad视频" }
+
+userinfo:
+  path: https://totheglory.im/rules.php
+  item:
+    selector: table[style="width:100%"]
+  fields:
+    uid:
+      default_value: 0
+      selector: a[href^="/userdetails.php?id="]
+      attribute: href
+      filters:
+        - name: re_search
+          args: [ '\d+', 0 ]
+    vip_group:
+      case:
+        img[alt="donor"]: true
+        "*": false
+    user_group:
+      default_value: 'Byte'
+      selector: a[href^="/userdetails.php?id="]
+      attribute: class
+    username:
+      default_value: '未知用户名'
+      selector: a[href^="/userdetails.php?id="]
+    vip_share_ratio:
+      text: "inf"
+    share_ratio_default:
+      default_value: ''
+      selectors: font
+      index: 3
+      filters:
+        - name: replace
+          args: [ '无限','inf' ]
+    share_ratio:
+      text: "{% if fields['vip_group'] %}{{fields['vip_share_ratio']}}{%else%}{{fields['share_ratio_default']}}{% endif%}"
+    uploaded:
+      default_value: 0
+      selectors: font
+      index: -7
+      filters:
+        - name: replace
+          args: [ '无限','inf' ]
+    downloaded:
+      default_value: 0
+      selectors: font
+      index: -5
+      filters:
+        - name: replace
+          args: [ '无限','inf' ]
+    seeding:
+      default_value: 0
+      selectors: font
+      index: -3
+    leeching:
+      default_value: 0
+      selectors: font
+      index: -2
+search:
+  paths:
+    - path: browse.php
+  query:
+    search_field: "{% for c in query.cates %}category:`{{c}}` {% endfor %}{% if query.imdb_id %}{{ query.imdb_id | replace('tt','imdb') }}{% else %}{{ query.keyword }}{% endif %}"
+    page: "{{ query.page }}"
+    c: M
+torrents:
+  list:
+    selector: table#torrent_table > tr[id]
+  fields:
+    id:
+      selector: div.name_left > a
+      attribute: href
+      filters:
+        - name: re_search
+          args: [ '\d+', 0 ]
+    description_free_forever:
+      selector: div.name_left > a > b > font > span
+    description_normal:
+      selector: div.name_left > a > b > span
+    description:
+      text: "{% if fields['description_free_forever'] %}{{ fields['description_free_forever'] }}{% else %}{{ fields['description_normal'] }}{% endif %}"
+    title:
+      selector: div.name_left > a > b
+      remove: span
+    category:
+      selector: tr[id] td:nth-child(1) > a > img
+      attribute: alt
+    details:
+      selector: div.name_left > a
+      attribute: href
+    download:
+      selector: a.dl_a
+      attribute: href
+    files:
+      selector: td:nth-child(3)
+    size:
+      selector: td:nth-child(7)
+    seeders:
+      selector: td:nth-child(9)
+      filters:
+        - name: split
+          args: [ "/", 0 ]
+    leechers:
+      selector: td:nth-child(9)
+      filters:
+        - name: split
+          args: [ "/", 1 ]
+        - name: replace
+          args: [ "\n", "" ]
+    grabs:
+      selector: td:nth-child(8)
+      filters:
+        - name: replace
+          args: [ "次","" ]
+    date:
+      selector: td:nth-child(5)
+      filters:
+        - name: dateparse
+          args: "%Y-%m-%d%H:%M:%S"
+    imdbid:
+      selector: span.imdb_rate > a
+      attribute: href
+      filters:
+        - name: re_search
+          args: [ 'tt\d+',0 ]
+    downloadvolumefactor:
+      case:
+        img[alt="free"]: 0
+        img[alt="50%"]: 0.5
+        img[alt="30%"]: 0.3
+        "*": 1
+    uploadvolumefactor:
+      case:
+        img[alt="200%"]: 2
+        "*": 1
+    free_deadline:
+      default_value: "{% if fields['downloadvolumefactor']==0 %}{{max_time}}{% endif%}"
+      default_value_format: '%Y-%m-%d %H:%M:%S.%f'
+      selector: span[onclick]
+      attribute: onclick
+      filters:
+        - name: re_search
+          args: [ '\d+年\d+月\d+日\d+点\d+分',0 ]
+        - name: dateparse
+          args: "%Y年%m月%d日%H点%M分"
+    minimumratio:
+      case:
+        img[title="Hit and Run"]: 1
+        "*": 0
+    minimumseedtime:
+      case:
+        img[title="Hit and Run"]: 216000
+        "*": 0

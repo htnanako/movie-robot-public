@@ -1,0 +1,169 @@
+id: tjupt
+name: 北洋园
+domain: https://tjupt.org/
+encoding: UTF-8
+config_url: https://raw.githubusercontent.com/htnanako/movie-robot-sites/main/app/sites/tjupt.yml
+
+login:
+  test:
+    selector: a[href="logout.php"]
+
+category_mappings:
+    - {id: 401, cate_level1: Movie, cate_level2: 电影, cate_level2_desc: "电影"}
+    - {id: 402, cate_level1: TV, cate_level2: 剧集, cate_level2_desc: "剧集"}
+    - {id: 403, cate_level1: TV, cate_level2: 综艺, cate_level2_desc: "综艺"}
+    - {id: 404, cate_level1: Other, cate_level2: 资料, cate_level2_desc: "资料"}
+    - {id: 405, cate_level1: Anime, cate_level2: 动漫, cate_level2_desc: "动漫"}
+    - {id: 406, cate_level1: Music, cate_level2: 音乐, cate_level2_desc: "音乐"}
+    - {id: 407, cate_level1: TV, cate_level2: 体育, cate_level2_desc: "体育"}
+    - {id: 408, cate_level1: Other, cate_level2: 软件, cate_level2_desc: "软件"}
+    - {id: 409, cate_level1: Game, cate_level2: 游戏, cate_level2_desc: "游戏"}
+    - {id: 411, cate_level1: Documentary, cate_level2: 纪录片, cate_level2_desc: "纪录片"}
+    - {id: 412, cate_level1: Movie, cate_level2: 移动视频, cate_level2_desc: "移动视频"}
+    - {id: 410, cate_level1: Other, cate_level2: 其他, cate_level2_desc: "其他"}
+
+userinfo:
+  path: https://tjupt.org/rules.php
+  item:
+    selector: table[id="info_block"]
+  fields:
+    uid:
+      default_value: 0
+      selector: a[href^="userdetails.php?id="]
+      attribute: href
+      filters:
+        - name: re_search
+          args: [ '\d+', 0 ]
+    user_group:
+      default_value: ''
+      selector: a[href^="userdetails.php?id="]
+      attribute: class
+    username:
+      default_value: '未知用户名'
+      selector: a[href^="userdetails.php?id="]
+    share_ratio:
+      text: 0
+    uploaded:
+      default_value: 0
+      selector: font[class="color_uploaded"]
+      method: next_sibling
+      filters:
+        - name: replace
+          args: [ '无限','inf' ]
+    downloaded:
+      default_value: 0
+      selector: font[class="color_downloaded"]
+      method: next_sibling
+      filters:
+        - name: replace
+          args: [ '无限','inf' ]
+    seeding:
+      default_value: 0
+      selector: img[alt="Torrents seeding"]
+      method: next_sibling
+    leeching:
+      default_value: 0
+      selector: img[alt="Torrents leeching"]
+      method: next_sibling
+    vip_group:
+      case:
+        a[class^="VIP"]: true
+        "*": false
+search:
+  paths:
+    - path: torrents.php
+      method: get
+  query:
+    $raw: "{% for c in query.cates %}cat{{c}}=1&{% endfor %}"
+    search: "{% if query.imdb_id %}{{query.imdb_id}}{%else%}{{query.keyword}}{% endif %}"
+    # 0 incldead, 1 active, 2 dead
+    incldead: 1
+    # 0 all, 1 normal, 2 popular, 3 classic, 4 recomended, 5 0day, 6 imdb top 250
+    picktype: 0
+    # 0 all, 1 normal, 2 free, 3 2x, 4 2xfree, 5 50%, 6 2x50%, 7 30%
+    spstate: "{% if query.free %}2{% else %}0{% endif %}"
+    # 0 title, 1 descr, 3 uploader, 4 imdburl (searching imdburl does not work with tt1234567, but descr is good)
+    search_area: "{% if query.imdb_id %}4{% else %}0{%endif%}"
+    # 0 AND, 1 OR, 2 exact
+    search_mode: 0
+    sort: "{{ query.sort }}"
+    type: "{{ query.type }}"
+    page: "{{ query.page }}"
+
+torrents:
+  list:
+    selector: table.torrents > tr:has(table.torrentname)
+  fields:
+    id:
+      selector: a[href^="details.php?id="]
+      attribute: href
+      filters:
+        - name: re_search
+          args: [ '\d+', 0 ]
+    category:
+      selector: a[href*="cat="]
+      attribute: href
+      filters:
+        - name: querystring
+          args: cat
+    title_default:
+      selector: a[href^="details.php?id="]
+    title_optional:
+      optional: true
+      selector: a[title][href^="details.php?id="]
+      attribute: title
+    title:
+      text: "{% if fields['title_optional'] %}{{ fields['title_optional'] }}{% else %}{{ fields['title_default'] }}{% endif %}"
+    details:
+      selector: a[href^="details.php?id="]
+      attribute: href
+    download:
+      selector: a[href^="download.php?id="]
+      attribute: href
+    imdbid:
+      selector: a[href*="imdb.com/title/tt"]
+      attribute: href
+      filters:
+        - name: re_search
+          args: [ 'tt\d+',0 ]
+    date_elapsed:
+      # time type: time elapsed (default)
+      selector: td:nth-child(4) > span[title]
+      attribute: title
+      optional: true
+    date_added:
+      # time added
+      selector: td:nth-child(4):not(:has(span))
+      optional: true
+    date:
+      text: "{% if fields['date_elapsed'] or fields['date_added'] %}{{ fields['date_elapsed'] if fields['date_elapsed'] else fields['date_added'] }}{% else %}now{% endif %}"
+      filters:
+        - name: dateparse
+          args: "%Y-%m-%d %H:%M:%S"
+    size:
+      selector: td:nth-child(5)
+    seeders:
+      selector: td:nth-child(6)
+    leechers:
+      selector: td:nth-child(7)
+    grabs:
+      selector: td:nth-child(8)
+    downloadvolumefactor:
+      case:
+        font.free: 0
+        font.twoupfree: 0
+        font.halfdown: 0.5
+        font.twouphalfdown: 0.5
+        font.thirtypercent: 0.3
+        "*": 1
+    uploadvolumefactor:
+      case:
+        font.twouphalfdown: 2
+        font.twoupfree: 2
+        font.twoup: 2
+        "*": 1
+    description:
+      selector: td:nth-child(2)
+      remove: a, img, div
+    minimumratio:
+      text: 0.8

@@ -1,0 +1,117 @@
+id: exoticaz
+name: exoticaz
+domain: https://exoticaz.to/
+encoding: UTF-8
+config_url: https://raw.githubusercontent.com/htnanako/movie-robot-sites/main/app/sites/exoticaz.yml
+
+login:
+  test:
+    selector: a[href="https://exoticaz.to/messenger"]
+
+category_mappings:
+  - { id: "Video Clip", cate_level1: AV, cate_level2: "XXX" , cate_level2_desc: "Video Clip" }
+  - { id: "Video Pack", cate_level1: AV, cate_level2: "XXX" , cate_level2_desc: "Video Pack" }
+  - { id: "Siterip Pack", cate_level1: AV, cate_level2: "XXX" , cate_level2_desc: "Siterip Pack" }
+  - { id: "Pornstar Pack", cate_level1: AV, cate_level2: "XXX" , cate_level2_desc: "Pornstar Pack" }
+  - { id: "DVD", cate_level1: AV, cate_level2: "XXX" , cate_level2_desc: "DVD" }
+  - { id: "BluRay", cate_level1: AV, cate_level2: "XXX" , cate_level2_desc: "BluRay" }
+  - { id: "Photo Pack", cate_level1: AV, cate_level2: "XXX" , cate_level2_desc: "Photo Pack" }
+  - { id: "Books & Magazines", cate_level1: AV, cate_level2: "XXX" , cate_level2_desc: "Books & Magazines" }
+
+userinfo:
+  path: https://exoticaz.to/support
+  item:
+    selector: div.ratio-bar
+  fields:
+    uid:
+      text: 0
+    user_group:
+      text: 'user'
+    username:
+      default_value: '未知用户名'
+      selector: div > div:nth-child(1) > a > span
+    uploaded:
+      default_value: 0
+      selector: div > div:nth-child(3)
+      content: -1
+    downloaded:
+      default_value: 0
+      selector: div > div:nth-child(4)
+      content: -1
+    seeding:
+      default_value: 0
+      selector: div > div:nth-child(7)
+      contents: -1
+    leeching:
+      default_value: 0
+      selector: div > div:nth-child(8)
+      content: -1
+    vip_group:
+      case:
+        a[class^="VIP"]: true
+        "*": false
+search:
+  paths:
+    - path: torrents
+      method: get
+  query:
+    $raw: "{% for c in query.cates %}category[]={{c}}{% endfor %}"
+    search: "{{ query.keyword }}"
+    order: "{{ query.sort }}"
+    page: "{{ query.page }}"
+
+torrents:
+  list:
+    selector: div.card.mt-2 > div.card-body.p-2 > div.table-responsive > table > tbody > tr:has(td > i.fa.fa-video.category-icon)
+  fields:
+    id:
+      selector: a[href^="https://exoticaz.to/torrent/"]
+      attribute: href
+      filters:
+        - name: re_search
+          args: [ '\d+', 0 ]
+    title:
+      selector: a[href^="https://exoticaz.to/torrent/"]
+    category:
+      selector: td:nth-child(1) > i.fa.fa-video.category-icon[title]
+      attribute: title
+    details:
+      selector: a[href^="https://exoticaz.to/torrent/"]
+      attribute: href
+      filters:
+        - name: replace
+          args: ["https://exoticaz.to/", ""]
+    download:
+      selector: a[href^="https://exoticaz.to/download/torrent/"]
+      attribute: href
+    poster:
+      selector: td:nth-child(2) > div.screen-image.d-inline-block.float-left.mr-1 > img
+      attribute: src
+    date:
+      selector: td:nth-child(4)
+      filters:
+        - name: date_en_elapsed_parse
+    size:
+      selector: td:nth-child(5)
+    seeders:
+      selector: td:nth-child(6)
+    leechers:
+      selector: td:nth-child(7)
+    grabs:
+      selector: td:nth-child(8)
+    downloadvolumefactor:
+      case:
+        i.fa.fa-star.text-yellow: 0
+        i.fa.fa-star-half-alt.text-pink: 0.5
+        "*": 1
+    uploadvolumefactor:
+      case:
+        i.fa.fa-gem.text-green: 2
+        "*": 1
+    free_deadline:
+      default_value: "{% if fields['downloadvolumefactor']==0 %}{{max_time}}{% endif%}"
+      default_value_format: '%Y-%m-%d %H:%M:%S.%f'
+    minimumratio:
+      text: 1
+    minimumseedtime:
+      text: 2073600

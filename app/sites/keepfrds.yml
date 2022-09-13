@@ -1,0 +1,174 @@
+id: keepfrds
+name: 朋友
+domain: https://pt.keepfrds.com/
+encoding: UTF-8
+config_url: https://raw.githubusercontent.com/htnanako/movie-robot-sites/main/app/sites/keepfrds.yml
+
+login:
+  test:
+    selector: a[onclick="document.getElementById('logout').submit();"]
+
+category_mappings:
+  - { id: 401, cate_level1: Movie, cate_level2: "电影", cate_level2_desc: "电影" }
+  - { id: 301, cate_level1: Movie, cate_level2: "电影(合集)", cate_level2_desc: "电影(合集)" }
+  - { id: 404, cate_level1: Documentary, cate_level2: "纪录片", cate_level2_desc: "纪录片" }
+  - { id: 304, cate_level1: Documentary, cate_level2: "纪录片(合集)", cate_level2_desc: "纪录片(合集)" }
+  - { id: 405, cate_level1: Anime, cate_level2: "动漫", cate_level2_desc: "动漫" }
+  - { id: 305, cate_level1: Anime, cate_level2: "动漫(合集)", cate_level2_desc: "动漫(合集)" }
+  - { id: 402, cate_level1: TV, cate_level2: "剧集", cate_level2_desc: "剧集" }
+  - { id: 302, cate_level1: TV, cate_level2: "剧集(合集)", cate_level2_desc: "剧集(合集)" }
+  - { id: 403, cate_level1: TV, cate_level2: "综艺", cate_level2_desc: "综艺" }
+  - { id: 303, cate_level1: TV, cate_level2: "综艺(合集)", cate_level2_desc: "综艺(合集)" }
+  - { id: 407, cate_level1: TV, cate_level2: "体育", cate_level2_desc: "体育" }
+  - { id: 307, cate_level1: TV, cate_level2: "体育(合集)", cate_level2_desc: "体育(合集)" }
+  - { id: 406, cate_level1: Music, cate_level2: "音乐录影带", cate_level2_desc: "音乐录影带" }
+  - { id: 306, cate_level1: Music, cate_level2: "音乐录影带(合集)", cate_level2_desc: "音乐录影带(合集)" }
+  - { id: 408, cate_level1: Music, cate_level2: "音乐", cate_level2_desc: "音乐" }
+  - { id: 308, cate_level1: Music, cate_level2: "音乐(合集)", cate_level2_desc: "音乐(合集)" }
+  - { id: 409, cate_level1: Other, cate_level2: "其他", cate_level2_desc: "其他" }
+  - { id: 309, cate_level1: Other, cate_level2: "其他(合集)", cate_level2_desc: "其他(合集)" }
+  - { id: 300, cate_level1: Other, cate_level2: "回收站", cate_level2_desc: "回收站" }
+
+userinfo:
+  path: https://pt.keepfrds.com/rules.php
+  item:
+    selector: table[id="info_block"]
+  fields:
+    uid:
+      default_value: 0
+      selector: a[href^="userdetails.php?id="]
+      attribute: href
+      filters:
+        - name: re_search
+          args: [ '\d+', 0 ]
+    user_group:
+      default_value: ''
+      selector: a[href^="userdetails.php?id="]
+      attribute: class
+    username:
+      default_value: '未知用户名'
+      selector: a[href^="userdetails.php?id="]
+    share_ratio:
+      default_value: ''
+      selector: font[class="color_ratio"]
+      method: next_sibling
+      filters:
+        - name: replace
+          args: [ '无限','inf' ]
+    uploaded:
+      default_value: 0
+      selector: font[class="color_uploaded"]
+      method: next_sibling
+      filters:
+        - name: replace
+          args: [ '无限','inf' ]
+    downloaded:
+      default_value: 0
+      selector: font[class="color_downloaded"]
+      method: next_sibling
+      filters:
+        - name: replace
+          args: [ '无限','inf' ]
+    seeding:
+      default_value: 0
+      selector: img[alt="Torrents seeding"]
+      method: next_sibling
+    leeching:
+      default_value: 0
+      selector: img[alt="Torrents leeching"]
+      method: next_sibling
+    vip_group:
+      case:
+        a[class^="VIP"]: true
+        "*": false
+search:
+  paths:
+    - path: torrents.php
+      method: get
+  query:
+    $raw: "{% for c in query.cates %}cat{{c}}=1&{% endfor %}"
+    search: "{% if query.imdb_id %}{{query.imdb_id}}{%else%}{{query.keyword}}{% endif %}"
+    # 0 incldead, 1 active, 2 dead
+    incldead: 1
+    # 0 all, 1 normal, 2 free, 3 2x, 4 2xfree, 5 50%, 6 2x50%, 7 30%
+    spstate: "{% if query.free %}2{% else %}0{% endif %}"
+    # 0 title, 1 descr, 3 uploader, 4 imdburl (searching imdburl does not work with tt1234567, but descr is good)
+    search_area: "{% if query.imdb_id %}4{% else %}0{%endif%}"
+    # 0 AND, 1 OR, 2 exact
+    search_mode: 0
+    sort: "{{ query.sort }}"
+    type: "{{ query.type }}"
+    page: "{{ query.page }}"
+
+torrents:
+  list:
+    selector: table.torrents > tr:has(table.torrentname)
+  fields:
+    id:
+      selector: a[href^="details.php?id="]
+      attribute: href
+      filters:
+        - name: re_search
+          args: [ '\d+', 0 ]
+    category:
+      selector: a[href^="?cat="]
+      attribute: href
+      filters:
+        - name: querystring
+          args: cat
+    details:
+      selector: a[href^="details.php?id="]
+      attribute: href
+    download:
+      selector: a[href^="download.php?id="]
+      attribute: href
+    size:
+      selector: td:nth-child(5)
+    grabs:
+      selector: td:nth-child(8)
+    seeders:
+      selector: td:nth-child(6)
+    leechers:
+      selector: td:nth-child(7)
+    date_elapsed:
+      # time type: time elapsed (default)
+      selector: td:nth-child(4) > span[title]
+      attribute: title
+      optional: true
+    date_added:
+      # time added
+      selector: td:nth-child(4):not(:has(span))
+      optional: true
+    date:
+      text: "{% if fields['date_elapsed'] or fields['date_added'] %}{{ fields['date_elapsed'] if fields['date_elapsed'] else fields['date_added'] }}{% else %}now{% endif %}"
+      filters:
+        - name: dateparse
+          args: "%Y-%m-%d %H:%M:%S"
+    downloadvolumefactor:
+      case:
+        img.pro_free: 0
+        img.pro_free2up: 0
+        img.pro_50pctdown: 0.5
+        img.pro_50pctdown2up: 0.5
+        img.pro_30pctdown: 0.3
+        "*": 1
+    uploadvolumefactor:
+      case:
+        img.pro_50pctdown2up: 2
+        img.pro_free2up: 2
+        img.pro_2up: 2
+        "*": 1
+    free_deadline:
+      selector: img.pro_free,img.pro_free2up
+      attribute: onmouseover
+      filters:
+        - name: re_search
+          args: [ '\d+-\d+-\d+ \d+:\d+:\d+', 0 ]
+        - name: dateparse
+          args: "%Y-%m-%d %H:%M:%S"
+    description:
+      selector: a[title][href^="details.php?id="]
+      attribute: title
+    title:
+      selector: table.torrentname > tr > td
+      remove: a,b

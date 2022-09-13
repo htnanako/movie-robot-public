@@ -1,0 +1,210 @@
+id: mteam
+name: 馒头
+domain: https://kp.m-team.cc/
+encoding: UTF-8
+config_url: https://raw.githubusercontent.com/htnanako/movie-robot-sites/main/app/sites/mteam.yml
+
+login:
+  test:
+    selector: a[href="logout.php"]
+
+category_mappings:
+  - { id: 401, cate_level1: Movie, cate_level2: Movies/SD, cate_level2_desc: "Movie(電影)/SD" }
+  - { id: 419, cate_level1: Movie, cate_level2: Movies/HD, cate_level2_desc: "Movie(電影)/HD" }
+  - { id: 420, cate_level1: Movie, cate_level2: Movies/DVD, cate_level2_desc: "Movie(電影)/DVDiSo" }
+  - { id: 421, cate_level1: Movie, cate_level2: Movies/BluRay, cate_level2_desc: "Movie(電影)/Blu-Ray" }
+  - { id: 439, cate_level1: Movie, cate_level2: Movies/Other, cate_level2_desc: "Movie(電影)/Remux" }
+  - { id: 403, cate_level1: TV, cate_level2: TV/SD, cate_level2_desc: "TV Series(影劇/綜藝)/SD" }
+  - { id: 402, cate_level1: TV, cate_level2: TV/HD, cate_level2_desc: "TV Series(影劇/綜藝)/HD" }
+  - { id: 435, cate_level1: TV, cate_level2: TV/SD, cate_level2_desc: "TV Series(影劇/綜藝)/DVDiSo" }
+  - { id: 438, cate_level1: TV, cate_level2: TV/HD, cate_level2_desc: "TV Series(影劇/綜藝)/BD" }
+  - { id: 404, cate_level1: Documentary, cate_level2: TV/Documentary, cate_level2_desc: "紀錄教育" }
+  - { id: 405, cate_level1: Anime, cate_level2: TV/Anime, cate_level2_desc: "Anime(動畫)" }
+  - { id: 407, cate_level1: TV, cate_level2: TV/Sport, cate_level2_desc: "Sports(運動)" }
+  - { id: 422, cate_level1: Other, cate_level2: PC/0day, cate_level2_desc: "Software(軟體)" }
+  - { id: 423, cate_level1: Game, cate_level2: PC/Games, cate_level2_desc: "PCGame(PC遊戲)" }
+  - { id: 427, cate_level1: Other, cate_level2: Books, cate_level2_desc: "eBook(電子書)" }
+  - { id: 409, cate_level1: Other, cate_level2: Other, cate_level2_desc: "Misc(其他)" }
+  - { id: 406, cate_level1: Music, cate_level2: Audio/Video, cate_level2_desc: "MV(演唱)" }
+  - { id: 408, cate_level1: Music, cate_level2: Audio/Other, cate_level2_desc: "Music(AAC/ALAC)" }
+  - { id: 434, cate_level1: Music, cate_level2: Audio, cate_level2_desc: "Music(無損)" }
+  - { id: 410, cate_level1: AV, cate_level2: XXX, cate_level2_desc: "AV(有碼)/HD Censored" }
+  - { id: 429, cate_level1: AV, cate_level2: XXX, cate_level2_desc: "AV(無碼)/HD Uncensored" }
+  - { id: 424, cate_level1: AV, cate_level2: XXX, cate_level2_desc: "AV(有碼)/SD Censored" }
+  - { id: 430, cate_level1: AV, cate_level2: XXX, cate_level2_desc: "AV(無碼)/SD Uncensored" }
+  - { id: 426, cate_level1: AV, cate_level2: XXX, cate_level2_desc: "AV(無碼)/DVDiSo Uncensored" }
+  - { id: 437, cate_level1: AV, cate_level2: XXX, cate_level2_desc: "AV(有碼)/DVDiSo Censored" }
+  - { id: 431, cate_level1: AV, cate_level2: XXX, cate_level2_desc: "AV(有碼)/Blu-Ray Censored" }
+  - { id: 432, cate_level1: AV, cate_level2: XXX, cate_level2_desc: "AV(無碼)/Blu-Ray Uncensored" }
+  - { id: 436, cate_level1: AV, cate_level2: XXX, cate_level2_desc: "AV(網站)/0Day" }
+  - { id: 425, cate_level1: AV, cate_level2: XXX, cate_level2_desc: "IV(寫真影集)/Video Collection" }
+  - { id: 433, cate_level1: AV, cate_level2: XXX, cate_level2_desc: "IV(寫真圖集)/Picture Collection" }
+  - { id: 411, cate_level1: Game, cate_level2: XXX, cate_level2_desc: "H-Game(遊戲)" }
+  - { id: 412, cate_level1: Anime, cate_level2: XXX, cate_level2_desc: "H-Anime(動畫)" }
+  - { id: 413, cate_level1: Anime, cate_level2: XXX, cate_level2_desc: "H-Comic(漫畫)" }
+
+userinfo:
+  path: https://kp.m-team.cc/index.php
+  item:
+    selector: table[id="info_block"]
+  fields:
+    uid:
+      default_value: 0
+      selector: a[href^="userdetails.php?id="]
+      attribute: href
+      filters:
+        - name: re_search
+          args: [ '\d+', 0 ]
+    user_group:
+      default_value: ''
+      selector: a[href^="userdetails.php?id="]
+      attribute: class
+    username:
+      default_value: '未知用户名'
+      selector: a[href^="userdetails.php?id="]
+    share_ratio:
+      default_value: ''
+      selector: font[class="color_ratio"]
+      method: next_sibling
+      filters:
+        - name: replace
+          args: [ '無限','inf' ]
+    uploaded:
+      default_value: 0
+      selector: font[class="color_uploaded"]
+      method: next_sibling
+      filters:
+        - name: replace
+          args: [ '無限','inf' ]
+    downloaded:
+      default_value: 0
+      selector: font[class="color_downloaded"]
+      method: next_sibling
+      filters:
+        - name: replace
+          args: [ '無限','inf' ]
+    seeding:
+      default_value: 0
+      selector: img[alt="Torrents seeding"]
+      method: next_sibling
+    leeching:
+      default_value: 0
+      selector: img[alt="Torrents leeching"]
+      method: next_sibling
+    vip_group:
+      case:
+        a[class^="VIP"]: true
+        "*": false
+search:
+  paths:
+    - path: torrents.php
+      categories: [ "!", 410, 429, 424, 430, 426, 437, 431, 432, 436, 425, 433, 411, 412, 413, 406, 408, 434 ]
+    - path: adult.php
+      categories: [ 410, 429, 424, 430, 426, 437, 431, 432, 436, 425, 433, 411 ]
+    - path: music.php
+      categories: [ 406, 408, 434 ]
+  query:
+    $raw: "{% for c in query.cates %}cat{{c}}=1&{% endfor %}"
+    search: "{% if query.imdb_id %}{{query.imdb_id}}{%else%}{{query.keyword}}{% endif %}"
+    # 0 incldead, 1 active, 2 dead
+    incldead: 1
+    # 0 all, 1 normal, 2 free, 3 2x, 4 2xfree, 5 50%, 6 2x50%, 7 30%
+    spstate: "{% if query.free %}2{% else %}0{% endif %}"
+    # 0 title, 1 descr, 3 uploader, 4 imdburl (searching imdburl does not work with tt1234567, but descr is good)
+    search_area: "{% if query.imdb_id %}4{% else %}0{%endif%}"
+    # 0 AND, 1 OR, 2 exact
+    search_mode: 0
+    sort: "{{ query.sort }}"
+    type: "{{ query.type }}"
+    page: "{{ query.page }}"
+
+torrents:
+  list:
+    selector: table.torrents > tr:has(table.torrentname)
+  fields:
+    id:
+      selector: a[href^="details.php?id="]
+      attribute: href
+      filters:
+        - name: re_search
+          args: [ '\d+', 0 ]
+    title_default:
+      # shortened for long release names
+      selector: a[href^="details.php?id="] > b
+    title_optional:
+      # not available if IMDB tooltips are turned on
+      optional: true
+      selector: a[title][href^="details.php?id="]
+      attribute: title
+    title:
+      text: "{% if fields['title_optional'] %}{{ fields['title_optional'] }}{% else %}{{ fields['title_default'] }}{% endif %}"
+    category:
+      selector: a[href^="?cat="]
+      attribute: href
+      filters:
+        - name: querystring
+          args: cat
+    details:
+      selector: a[href^="details.php?id="]
+      attribute: href
+    download:
+      selector: a[href^="download.php?id="]
+      attribute: href
+    poster:
+      selector: img[alt="torrent thumbnail"]
+      attribute: src
+      filters:
+        - name: replace
+          args: [ "pic/nopic.jpg", "" ]
+    imdbid:
+      selector: a[href*="imdb.com/title/tt"]
+      attribute: href
+      filters:
+        - name: re_search
+          args: [ 'tt\d+',0 ]
+    size:
+      selector: td.rowfollow:nth-last-child(6)
+    grabs:
+      selector: td.rowfollow:nth-last-child(3)
+    seeders:
+      selector: td.rowfollow:nth-last-child(5)
+    leechers:
+      selector: td.rowfollow:nth-last-child(4)
+    date_added:
+      selector: td.rowfollow:nth-last-child(7) > span[title]
+      optional: true
+      attribute: title
+    date_elapsed:
+      selector: tr > td > span[title]
+      attribute: title
+      optional: true
+    date:
+      text: "{% if fields['date_elapsed'] or fields['date_added'] %}{{ fields['date_elapsed'] if fields['date_elapsed'] else fields['date_added'] }}{% else %}now{% endif %}"
+      filters:
+        - name: dateparse
+          args: "%Y-%m-%d %H:%M:%S"
+    downloadvolumefactor:
+      case:
+        img.pro_free: 0
+        img.pro_free2up: 0
+        img.pro_50pctdown: 0.5
+        img.pro_50pctdown2up: 0.5
+        img.pro_30pctdown: 0.3
+        "*": 1
+    uploadvolumefactor:
+      case:
+        img.pro_50pctdown2up: 2
+        img.pro_free2up: 2
+        img.pro_2up: 2
+        "*": 1
+    free_deadline:
+      default_value: "{% if fields['downloadvolumefactor']==0 %}{{max_time}}{% endif%}"
+      default_value_format: '%Y-%m-%d %H:%M:%S.%f'
+      selector: span[style="font-weight:normal"]
+      filters:
+        - name: re_search
+          args: [ '(?:限時：\s*)((?:\d+日)?(?:\d+時)?(?:\d+分)?)',1 ]
+        - name: date_elapsed_parse
+    description:
+      selector: table.torrentname > tr > td.embedded
+      contents: -1

@@ -1,0 +1,176 @@
+id: ourbits
+name: 我堡
+domain: https://ourbits.club/
+encoding: UTF-8
+config_url: https://raw.githubusercontent.com/htnanako/movie-robot-sites/main/app/sites/ourbits.yml
+
+login:
+  test:
+    selector: a[href="logout.php"]
+
+category_mappings:
+  - { id: 401, cate_level1: Movie, cate_level2: "Movies", cate_level2_desc: "Movies" }
+  - { id: 402, cate_level1: Movie, cate_level2: "Movies-3D", cate_level2_desc: "Movies-3D" }
+  - { id: 419, cate_level1: Music, cate_level2: "Concert", cate_level2_desc: "Concert" }
+  - { id: 412, cate_level1: TV, cate_level2: "TV-Episode", cate_level2_desc: "TV-Episode" }
+  - { id: 405, cate_level1: TV, cate_level2: "TV-Pack", cate_level2_desc: "TV-Pack" }
+  - { id: 413, cate_level1: TV, cate_level2: "TV-Show", cate_level2_desc: "TV-Show" }
+  - { id: 410, cate_level1: Documentary, cate_level2: "Documentary", cate_level2_desc: "Documentary" }
+  - { id: 411, cate_level1: Anime, cate_level2: "Animation", cate_level2_desc: "Animation" }
+  - { id: 415, cate_level1: TV, cate_level2: "Sports", cate_level2_desc: "Sports" }
+  - { id: 414, cate_level1: Music, cate_level2: "Music-Video", cate_level2_desc: "Music-Video" }
+  - { id: 414, cate_level1: Music, cate_level2: "Music-Video", cate_level2_desc: "Music-Video" }
+  - { id: 416, cate_level1: Music, cate_level2: "Music", cate_level2_desc: "Music" }
+userinfo:
+  path: https://ourbits.club/rules.php
+  item:
+    selector: table[id="info_block"]
+  fields:
+    uid:
+      default_value: 0
+      selector: a[href^="userdetails.php?id="]
+      attribute: href
+      filters:
+        - name: re_search
+          args: [ '\d+', 0 ]
+    user_group:
+      default_value: ''
+      selector: a[href^="userdetails.php?id="]
+      attribute: class
+    username:
+      default_value: '未知用户名'
+      selector: a[href^="userdetails.php?id="]
+    share_ratio:
+      default_value: ''
+      selector: span[class="color_ratio"]
+      method: next_sibling
+      filters:
+        - name: replace
+          args: [ '无限','inf' ]
+    uploaded:
+      default_value: 0
+      selector: font[class="color_uploaded"]
+      method: next_sibling
+      filters:
+        - name: replace
+          args: [ '无限','inf' ]
+    downloaded:
+      default_value: 0
+      selector: font[class="color_downloaded"]
+      method: next_sibling
+      filters:
+        - name: replace
+          args: [ '无限','inf' ]
+    seeding:
+      default_value: 0
+      selector: img[alt="Torrents seeding"]
+      method: next_sibling
+    leeching:
+      default_value: 0
+      selector: img[alt="Torrents leeching"]
+      method: next_sibling
+    vip_group:
+      case:
+        a[class^="VIP"]: true
+        "*": false
+search:
+  paths:
+    - path: torrents.php
+      method: get
+  query:
+    $raw: "{% for c in query.cates %}cat{{c}}=1&{% endfor %}"
+    search: "{% if query.imdb_id %}{{query.imdb_id}}{%else%}{{query.keyword}}{% endif %}"
+    # 0 incldead, 1 active, 2 dead
+    incldead: 1
+    # 0 all, 1 normal, 2 free, 3 2x, 4 2xfree, 5 50%, 6 2x50%, 7 30%
+    spstate: "{% if query.free %}2{% else %}0{% endif %}"
+    # 0 title, 1 descr, 3 uploader, 4 imdburl (searching imdburl does not work with tt1234567, but descr is good)
+    search_area: "{% if query.imdb_id %}4{% else %}0{%endif%}"
+    # 0 AND, 1 OR, 2 exact
+    search_mode: 0
+    sort: "{{ query.sort }}"
+    type: "{{ query.type }}"
+    page: "{{ query.page }}"
+
+torrents:
+  list:
+    selector: table.torrents > tr:has(table.torrentname)
+  fields:
+    id:
+      selector: a[href^="details.php?id="]
+      attribute: href
+      filters:
+        - name: re_search
+          args: [ '\d+', 0 ]
+    category:
+      selector: a[href^="?cat="]
+      attribute: href
+      filters:
+        - name: querystring
+          args: cat
+    title_default:
+      selector: a[href^="details.php?id="]
+    title_optional:
+      optional: true
+      selector: a[title][href^="details.php?id="]
+      attribute: title
+    title:
+      text: "{% if fields['title_optional'] %}{{ fields['title_optional'] }}{% else %}{{ fields['title_default'] }}{% endif %}"
+    details:
+      selector: a[href^="details.php?id="]
+      attribute: href
+    download:
+      selector: a[href^="download.php?id="]
+      attribute: href
+    size:
+      selectors: td:nth-child(5)
+      index: 1
+    grabs:
+      selector: td:nth-child(8)
+    seeders:
+      selector: td:nth-child(6)
+    leechers:
+      selector: td:nth-child(7)
+    date_elapsed:
+      # time type: time elapsed (default)
+      selector: td:nth-child(4) > span[title]
+      attribute: title
+      optional: true
+    date_added:
+      # time added
+      selector: td:nth-child(4):not(:has(span))
+      optional: true
+    date:
+      text: "{% if fields['date_elapsed'] or fields['date_added'] %}{{ fields['date_elapsed'] if fields['date_elapsed'] else fields['date_added'] }}{% else %}now{% endif %}"
+      filters:
+        - name: dateparse
+          args: "%Y-%m-%d %H:%M:%S"
+    downloadvolumefactor:
+      case:
+        img.pro_free: 0
+        img.pro_free2up: 0
+        img.pro_50pctdown: 0.5
+        img.pro_50pctdown2up: 0.5
+        img.pro_30pctdown: 0.3
+        "*": 1
+    uploadvolumefactor:
+      case:
+        img.pro_50pctdown2up: 2
+        img.pro_free2up: 2
+        img.pro_2up: 2
+        "*": 1
+    free_deadline:
+      default_value: "{% if fields['downloadvolumefactor']==0 %}{{max_time}}{% endif%}"
+      default_value_format: '%Y-%m-%d %H:%M:%S.%f'
+      selector: 'td[class="embedded"] > b > span[title]'
+      attribute: title
+      filters:
+        - name: dateparse
+          args: "%Y-%m-%d %H:%M:%S"
+    tags:
+      selector: table.torrentname > tr > td.embedded > div:has(a)
+    subject:
+      selector: table.torrentname > tr > td.embedded
+      remove: div,a
+    description:
+      text: "{% if fields['tags']%}{{ fields['subject']+' '+fields['tags'] }}{% else %}{{ fields['subject'] }}{% endif %}"
