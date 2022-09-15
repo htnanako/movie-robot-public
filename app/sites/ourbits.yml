@@ -175,3 +175,11 @@ torrents:
       remove: div,a
     description:
       text: "{% if fields['tags']%}{{ fields['subject']+' '+fields['tags'] }}{% else %}{{ fields['subject'] }}{% endif %}"
+    minimumratio:
+      case:
+        img.hitandrun: 1
+        "*": 0
+    minimumseedtime:
+      case:
+        img.hitandrun: 172800
+        "*": 0
