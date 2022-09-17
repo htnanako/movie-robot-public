@@ -1,0 +1,189 @@
+id: HDarea
+name: 高清视界
+domain: https://www.hdarea.co/
+encoding: UTF-8
+config_url: https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/hdarea.yml
+version: 20220917
+
+login:
+  test:
+    selector: a[href="logout.php"]
+
+category_mappings:
+  - { id: 300, cate_level1: Movie, cate_level2: Movies, cate_level2_desc: "Movies/Movie UHD-4K" }
+  - { id: 401, cate_level1: Movie, cate_level2: Movies, cate_level2_desc: "Movies/Movies Blu-ray" }
+  - { id: 415, cate_level1: Movie, cate_level2: Movies, cate_level2_desc: "Movies/Movies REMUX" }
+  - { id: 416, cate_level1: Movie, cate_level2: Movies, cate_level2_desc: "Movies/Movies 3D" }
+  - { id: 410, cate_level1: Movie, cate_level2: Movies, cate_level2_desc: "Movies/Movies 1080p" }
+  - { id: 411, cate_level1: Movie, cate_level2: Movies, cate_level2_desc: "Movies/Movies 720p" }
+  - { id: 414, cate_level1: Movie, cate_level2: Movies, cate_level2_desc: "Movies/Movies DVD" }
+  - { id: 412, cate_level1: Movie, cate_level2: Movies, cate_level2_desc: "Movies/Movies WEB-DL" }
+  - { id: 413, cate_level1: Movie, cate_level2: Movies, cate_level2_desc: "Movies/Movies HDTV" }
+  - { id: 417, cate_level1: Movie, cate_level2: Movies, cate_level2_desc: "Movies/Movies iPad" }
+  - { id: 404, cate_level1: Documentary, cate_level2: TV/Documentary, cate_level2_desc: "Documentaries/纪录片" }
+  - { id: 405, cate_level1: Anime , cate_level2: TV/Anime, cate_level2_desc: "Animations/动漫" }
+  - { id: 402, cate_level1: TV, cate_level2: TV, cate_level2_desc: "TV Series/剧集" }
+  - { id: 403, cate_level1: TV, cate_level2: TV, cate_level2_desc: "TV Shows/综艺" }
+  - { id: 406, cate_level1: Music, cate_level2: Audio/Video, cate_level2_desc: "MusicVideo/Music Videos" }
+  - { id: 407, cate_level1: TV, cate_level2: TV/Sport, cate_level2_desc: "Sports/体育" }
+  - { id: 409, cate_level1: Other, cate_level2: Other, cate_level2_desc: "Misc/其他" }
+  - { id: 408, cate_level1: Music, cate_level2: Audio,cate_level2_ desc: "HQ Audio/无损音乐" }
+
+userinfo:
+  path: https://www.hdarea.co/index.php
+  item:
+    selector: table[id="info_block"]
+  fields:
+    uid:
+      default_value: 0
+      selector: a[href^="userdetails.php?id="]
+      attribute: href
+      filters:
+        - name: re_search
+          args: [ '\d+', 0 ]
+    user_group:
+      default_value: ''
+      selector: a[href^="userdetails.php?id="]
+      attribute: class
+    username:
+      default_value: '未知用户名'
+      selector: a[href^="userdetails.php?id="]
+    share_ratio:
+      default_value: ''
+      selector: font[class="color_ratio"]
+      method: next_sibling
+      filters:
+        - name: replace
+          args: [ '无限','inf' ]
+    uploaded:
+      default_value: 0
+      selector: font[class="color_uploaded"]
+      method: next_sibling
+      filters:
+        - name: replace
+          args: [ '无限','inf' ]
+    downloaded:
+      default_value: 0
+      selector: font[class="color_downloaded"]
+      method: next_sibling
+      filters:
+        - name: replace
+          args: [ '无限','inf' ]
+    seeding:
+      default_value: 0
+      selector: img[alt="Torrents seeding"]
+      method: next_sibling
+    leeching:
+      default_value: 0
+      selector: img[alt="Torrents leeching"]
+      method: next_sibling
+    vip_group:
+      case:
+        a[class^="VIP"]: true
+        "*": false
+search:
+  paths:
+    - path: torrents.php
+      method: get
+  query:
+    $raw: "{% for c in query.cates %}cat{{c}}=1&{% endfor %}"
+    search: "{% if query.imdb_id %}{{query.imdb_id}}{%else%}{{query.keyword}}{% endif %}"
+    # 0 incldead, 1 active, 2 dead
+    incldead: 1
+    # 0 all, 1 normal, 2 free, 3 2x, 4 2xfree, 5 50%, 6 2x50%, 7 30%
+    spstate: "{% if query.free %}2{% else %}0{% endif %}"
+    # 0 title, 1 descr, 3 uploader, 4 imdburl (searching imdburl does not work with tt1234567, but descr is good)
+    search_area: "{% if query.imdb_id %}4{% else %}0{%endif%}"
+    # 0 AND, 1 OR, 2 exact
+    search_mode: 0
+    sort: "{{ query.sort }}"
+    type: "{{ query.type }}"
+    page: "{{ query.page }}"
+
+torrents:
+  list:
+    selector: table.torrents > tr:has(table.torrentname)
+  fields:
+    id:
+      selector: a[href^="details.php?id="]
+      attribute: href
+      filters:
+        - name: re_search
+          args: [ '\d+', 0 ]
+    title_default:
+      selector: a[href^="details.php?id="]
+    title_optional:
+      optional: true
+      selector: a[title][href^="details.php?id="]
+      attribute: title
+    title:
+      text: "{% if fields['title_optional'] %}{{ fields['title_optional'] }}{% else %}{{ fields['title_default'] }}{% endif %}"
+    category:
+      selector: a[href^="?cat="]
+      attribute: href
+      filters:
+        - name: replace
+          args: [ "?", "" ]
+        - name: querystring
+          args: cat
+    details:
+      selector: a[href^="details.php?id="]
+      attribute: href
+    download:
+      selector: a[href^="download.php?id="]
+      attribute: href
+    imdbid:
+      selector: div.imdb_100 > a
+      attribute: href
+      filters:
+        - name: re_search
+          args: [ 'tt\d+',0 ]
+    date_elapsed:
+      # 站点设置，已去时间 (默认)
+      selector: td:nth-child(4) > span[title]
+      attribute: title
+      optional: true
+    date_added:
+      # 站点设置，实际时间
+      selector: td:nth-child(4):not(:has(span))
+      optional: true
+    date:
+      text: "{% if fields['date_elapsed'] or fields['date_added'] %}{{ fields['date_elapsed'] if fields['date_elapsed'] else fields['date_added'] }}{% else %}now{% endif %}"
+      filters:
+        - name: dateparse
+          args: "%Y-%m-%d %H:%M:%S"
+    size:
+      selector: td:nth-child(5)
+    seeders:
+      selector: td:nth-child(6)
+    leechers:
+      selector: td:nth-child(7)
+    grabs:
+      selector: td:nth-child(8)
+    downloadvolumefactor:
+      case:
+        img.pro_free: 0
+        img.pro_free2up: 0
+        img.pro_50pctdown: 0.5
+        img.pro_50pctdown2up: 0.5
+        img.pro_30pctdown: 0.3
+        "*": 1
+    uploadvolumefactor:
+      case:
+        img.pro_50pctdown2up: 2
+        img.pro_free2up: 2
+        img.pro_2up: 2
+        "*": 1
+    free_deadline:
+      default_value: "{% if fields['downloadvolumefactor']==0 %}{{max_time}}{% endif%}"
+      default_value_format: '%Y-%m-%d %H:%M:%S.%f'
+      selector: img.pro_free,img.pro_free2up
+      attribute: onmouseover
+      filters:
+        - name: re_search
+          args: [ '\d+-\d+-\d+ \d+:\d+:\d+', 0 ]
+        - name: dateparse
+          args: "%Y-%m-%d %H:%M:%S"
+    description:
+      selector: td:nth-child(2) > table > tr > td.embedded
+      contents: -1
