@@ -2,7 +2,7 @@ id: rarbg
 name: RARBG
 domain: https://rarbg.to
 encoding: UTF-8
-config_url: https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/rarbg.yml
+config_url: https://ghproxy.com/https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/rarbg.yml
 version: 20220913
 
 parser: RARBG
