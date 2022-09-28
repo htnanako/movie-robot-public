@@ -3,7 +3,7 @@ name: 我堡
 domain: https://ourbits.club/
 encoding: UTF-8
 config_url: https://ghproxy.com/https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/ourbits.yml
-version: 20220913
+version: 20220928
 
 login:
   test:
