@@ -3,7 +3,6 @@ name: 猫站
 domain: https://pterclub.com/
 encoding: UTF-8
 config_url: https://ghproxy.com/https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/pterclub.yml
-version: 20220913
 
 login:
   test:
