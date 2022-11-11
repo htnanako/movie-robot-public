@@ -1,0 +1,108 @@
+id: acgrip
+name: acg
+domain: https://acg.rip
+encoding: UTF-8
+config_url: https://ghproxy.com/https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/acg.yml
+
+login:
+  required: false
+  test:
+    selector: a[id="user-logout"]
+
+category_mappings:
+  - { id: 1, cate_level1: Anime, cate_level2: TV/Anime, cate_level2_desc: "Anime(動畫)" }
+
+userinfo:
+  constant: true
+  fields:
+    uid: 0
+    user_group: ''
+    username: 'acg'
+    share_ratio: ''
+    uploaded: 0
+    downloaded: 0
+    seeding: 0
+    leeching: 0
+    vip_group: 0
+list:
+  path: /1
+  list:
+    selector: div.container > table.table.table-hover.table-condensed.post-index > tr
+  fields:
+    id:
+      selector: td.title > span > a[href^="/t/"]
+      attribute: href
+      filters:
+        - name: re_search
+          args: [ '\d+', 0 ]
+    category:
+      default_value: 1
+    details:
+      selector: td.title > span > a[href^="/t/"]
+      attribute: href
+    download:
+      selector: td.action > a[href^="/t/"]
+      attribute: href
+    size:
+      selector: td.size
+    grabs:
+      default_value: 99
+    seeders:
+      default_value: 99
+    leechers:
+      default_value: 99
+    downloadvolumefactor:
+      default_value: 0
+    uploadvolumefactor:
+      default_value: 1
+    free_deadline:
+      default_value: "{{max_time}}"
+      default_value_format: '%Y-%m-%d %H:%M:%S.%f'
+    description:
+      selector: td.title > span > a[href^="/t/"]
+    title:
+      text: "{{ fields['description'] }}"
+search:
+  paths:
+    - path: /
+      categories: [ 1 ]
+  query:
+    term: "{{query.keyword}}"
+
+torrents:
+  list:
+    selector: div.container > table.table.table-hover.table-condensed.post-index > tr
+  fields:
+    id:
+      selector: td.title > span > a[href^="/t/"]
+      attribute: href
+      filters:
+        - name: re_search
+          args: [ '\d+', 0 ]
+    category:
+      default_value: 1
+    details:
+      selector: td.title > span > a[href^="/t/"]
+      attribute: href
+    download:
+      selector: td.action > a[href^="/t/"]
+      attribute: href
+    size:
+      selector: td.size
+    grabs:
+      default_value: 99
+    seeders:
+      default_value: 99
+    leechers:
+      default_value: 99
+    downloadvolumefactor:
+      default_value: 0
+    uploadvolumefactor:
+      default_value: 1
+    free_deadline: 
+      default_value: "{{max_time}}"
+      default_value_format: '%Y-%m-%d %H:%M:%S.%f'
+    description:
+      selector: td.title > span > a[href^="/t/"]
+    title:
+      text: "{{ fields['description'] }}"
