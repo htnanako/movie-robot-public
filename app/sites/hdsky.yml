@@ -185,12 +185,16 @@ torrents:
           args: [ '\d+-\d+-\d+ \d+:\d+:\d+', 0 ]
         - name: dateparse
           args: "%Y-%m-%d %H:%M:%S"
-    description:
+    tags:
+      selectors: td.embedded > span.optiontag
+    subject:
       selector: td:nth-child(2) > table > tr > td.embedded
       remove: img,a,b,span
       filters:
         - name: replace
           args: [ "[优惠剩余时间：]","" ]
+    description:
+      text: "{% if fields['tags']%}{{ fields['subject']+' '+fields['tags']|join(' ') }}{% else %}{{ fields['subject'] }}{% endif %}"
 
 detail:
   item:

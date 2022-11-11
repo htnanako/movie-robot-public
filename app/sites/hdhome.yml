@@ -3,7 +3,6 @@ name: 家园
 domain: https://hdhome.org/
 encoding: UTF-8
 config_url: https://ghproxy.com/https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/hdhome.yml
-version: 20220913
 
 login:
   test:
@@ -218,6 +217,10 @@ torrents:
           args: [ '\d+-\d+-\d+ \d+:\d+:\d+', 0 ]
         - name: dateparse
           args: "%Y-%m-%d %H:%M:%S"
-    description:
+    subject:
       selector: td:nth-child(2) > table > tr > td.embedded
       contents: -1
+    tags:
+      selectors: td.embedded > span.tags
+    description:
+      text: "{% if fields['tags']%}{{ fields['subject']+' '+fields['tags']|join(' ') }}{% else %}{{ fields['subject'] }}{% endif %}"
