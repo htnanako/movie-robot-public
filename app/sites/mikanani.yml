@@ -1,0 +1,139 @@
+id: mikanani
+name: 蜜柑
+domain: https://mikanani.me
+encoding: UTF-8
+config_url: https://ghproxy.com/https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/mikanani.yml
+login:
+  #不需要登陆，也可以使用，设置为false不做登陆验证
+  required: false
+  test:
+    selector: a[id="user-logout"]
+
+category_mappings:
+  #蜜柑计划站点全都是动漫，并且站点没有分类，所以设定一个默认的动漫分类即可
+  - { id: 1, cate_level1: Anime, cate_level2: TV/Anime, cate_level2_desc: "Anime(動畫)" }
+
+userinfo:
+  #常量模式，这个站点不需要用户信息，所以直接定义静态的值
+  constant: true
+  #常量模式，fields就是一个标准json
+  fields:
+    uid: 0
+    user_group: ''
+    username: 'mikanani'
+    share_ratio: ''
+    uploaded: 0
+    downloaded: 0
+    seeding: 0
+    leeching: 0
+    vip_group: 0
+#列表功能配置
+list:
+  path: /Home/Classic
+  list:
+    selector: table.table > tbody > tr
+  fields:
+    id:
+      selector: a[href^="/Download/"]
+      attribute: href
+      filters:
+        - name: re_search
+          args: [ '/Download/\d+/([^"]+).torrent', 1 ]
+    category:
+      # 没有分类，所以默认category_mappings中定义的
+      default_value: 1
+    details:
+      selector: a[href^="/Home/Episode"]
+      attribute: href
+    download:
+      selector: a[href^="/Download/"]
+      attribute: href
+    size:
+      selector: td:nth-child(4)
+    grabs:
+      # bt站没有，提供默认值，保证过滤器可用
+      default_value: 99
+    seeders:
+      # bt站没有，提供默认值，保证过滤器可用
+      default_value: 99
+    leechers:
+      # bt站没有，提供默认值，保证过滤器可用
+      default_value: 99
+    date:
+      selector: td:nth-child(1)
+      filters:
+        - name: dateparse
+          args: "%Y/%m/%d %H:%M"
+    downloadvolumefactor:
+      # bt站没有，提供默认值为下载免费，保证过滤器可用
+      default_value: 0
+    uploadvolumefactor:
+      # bt站没有，提供默认值，保证过滤器可用
+      default_value: 1
+    free_deadline:
+      # bt站没有，提供默认值永久免费
+      default_value: "{{max_time}}"
+      default_value_format: '%Y-%m-%d %H:%M:%S.%f'
+    description:
+      selector: a[href^="/Home/Episode"]
+    title:
+      text: "{{ fields['description'] }}"
+#搜索功能配置
+search:
+  paths:
+    - path: /Home/Search
+      #上面随便设定的分类编号为0，这里填0，就可以再搜索动漫分类时，搜索这个站点，这个地址
+      categories: [ 1 ]
+  query:
+    #搜索页只需要一个关键字参数
+    searchstr: "{{query.keyword}}"
+
+torrents:
+  list:
+    selector: table.table > tbody > tr.js-search-results-row
+  fields:
+    id:
+      selector: a[href^="/Download/"]
+      attribute: href
+      filters:
+        - name: re_search
+          args: [ '/Download/\d+/([^"]+).torrent', 1 ]
+    category:
+      # 没有分类，所以默认category_mappings中定义的
+      default_value: 1
+    details:
+      selector: a[href^="/Home/Episode"]
+      attribute: href
+    download:
+      selector: a[href^="/Download/"]
+      attribute: href
+    size:
+      selector: td:nth-child(2)
+    grabs:
+      # bt站没有，提供默认值，保证过滤器可用
+      default_value: 99
+    seeders:
+      # bt站没有，提供默认值，保证过滤器可用
+      default_value: 99
+    leechers:
+      # bt站没有，提供默认值，保证过滤器可用
+      default_value: 99
+    date:
+      selector: td:nth-child(3)
+      filters:
+        - name: dateparse
+          args: "%Y/%m/%d %H:%M"
+    downloadvolumefactor:
+      # bt站没有，提供默认值为下载免费，保证过滤器可用
+      default_value: 0
+    uploadvolumefactor:
+      # bt站没有，提供默认值，保证过滤器可用
+      default_value: 1
+    free_deadline:
+      # bt站没有，提供默认值永久免费
+      default_value: "{{max_time}}"
+      default_value_format: '%Y-%m-%d %H:%M:%S.%f'
+    description:
+      selector: a[href^="/Home/Episode"]
+    title:
+      text: "{{ fields['description'] }}"
