@@ -160,7 +160,7 @@ torrents:
     free_deadline:
       default_value: "{% if fields['downloadvolumefactor']==0 %}{{max_time}}{% endif%}"
       default_value_format: '%Y-%m-%d %H:%M:%S.%f'
-      selector: 'td[class="embedded"] > font > span[title]'
+      selector: td:nth-child(2) > table > tr > td:nth-child(1) > font > b > span[title]
       attribute: title
       filters:
         - name: dateparse

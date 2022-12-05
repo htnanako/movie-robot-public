@@ -3,7 +3,6 @@ name: 柠檬
 domain: https://lemonhd.org/
 encoding: UTF-8
 config_url: https://ghproxy.com/https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/lemonhd.yml
-version: 20220913
 
 login:
   test:
@@ -162,17 +161,14 @@ torrents:
     downloadvolumefactor:
       case:
         'div[style^="padding-left"] > span[title]': 0
-#        img.pro_free2up: 0
-#        img.pro_50pctdown: 0.5
-#        img.pro_50pctdown2up: 0.5
-#        img.pro_30pctdown: 0.3
         "*": 1
     uploadvolumefactor:
       case:
-#        img.pro_50pctdown2up: 2
-        #        img.pro_free2up: 2
-        #        img.pro_2up: 2
         "*": 1
-    description:
+    subject:
       selectors: td:nth-child(3) > div
       index: 1
+    tags:
+      selectors: td:nth-child(3) > span.tag
+    description:
+      text: "{% if fields['tags']%}{{ fields['subject']+' '+fields['tags']|join(' ') }}{% else %}{{ fields['subject'] }}{% endif %}"

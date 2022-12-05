@@ -3,8 +3,6 @@ name: 天空
 domain: https://hdsky.me/
 encoding: UTF-8
 config_url: https://ghproxy.com/https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/hdsky.yml
-version: 20220917
-
 
 login:
   test:
@@ -26,12 +24,7 @@ category_mappings:
   - { id: 413, cate_level1: TV, cate_level2: TV, cate_level2_desc: "TV Series/海外剧集(合集）" }
   - { id: 414, cate_level1: TV, cate_level2: TV, cate_level2_desc: "TV Shows/海外综艺(分集）" }
   - { id: 415, cate_level1: TV, cate_level2: TV, cate_level2_desc: "TV Shows/海外综艺(合集）" }
-#请求间隔设定
-request_interval:
-  #下载间隔时间，在min-max之间随机
-  download:
-    min: 3
-    max: 5
+
 userinfo:
   path: https://hdsky.me/rules.php
   item:
@@ -192,9 +185,46 @@ torrents:
           args: [ '\d+-\d+-\d+ \d+:\d+:\d+', 0 ]
         - name: dateparse
           args: "%Y-%m-%d %H:%M:%S"
-    description:
+    tags:
+      selectors: td.embedded > span.optiontag
+    subject:
       selector: td:nth-child(2) > table > tr > td.embedded
       remove: img,a,b,span
       filters:
         - name: replace
           args: [ "[优惠剩余时间：]","" ]
+    description:
+      text: "{% if fields['tags']%}{{ fields['subject']+' '+fields['tags']|join(' ') }}{% else %}{{ fields['subject'] }}{% endif %}"
+
+detail:
+  item:
+    selector: table.mainouter > tr:last-child
+  fields:
+    downloadvolumefactor:
+      case:
+        font.halfdown: 0.5
+        "*": 1
+    title:
+      selector: h1[id="top"]
+      remove: b
+    download:
+      selector: form.index
+      attribute: action
+    filename:
+      selector: form.index > input
+      attribute: value
+    description:
+      selector: table > tr:nth-child(3) > td:last-child
+    intro:
+      selector: table > tr:nth-child(9) > td > div[id="kdescr"]
+    date:
+      selector: table > tr:nth-child(1) > td > span[title]
+      attribute: title
+      filters:
+        - name: dateparse
+          args: "%Y-%m-%d %H:%M:%S"
+    id:
+      text: "{{fields['download']}}"
+      filters:
+        - name: re_search
+          args: [ 'id=(\d+)', 1 ]
