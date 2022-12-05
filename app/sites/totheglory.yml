@@ -3,7 +3,6 @@ name: 听听歌
 domain: https://totheglory.im/
 encoding: UTF-8
 config_url: https://ghproxy.com/https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/totheglory.yml
-version: 20220913
 
 login:
   test:

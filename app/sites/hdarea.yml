@@ -3,7 +3,6 @@ name: 高清视界
 domain: https://www.hdarea.co/
 encoding: UTF-8
 config_url: https://ghproxy.com/https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/hdarea.yml
-version: 20220917
 
 login:
   test:

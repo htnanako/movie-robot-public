@@ -3,7 +3,6 @@ name: iptorrents
 domain: https://iptorrents.com/
 encoding: UTF-8
 config_url: https://ghproxy.com/https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/iptorrents.yml
-version: 20220913
 
 sub_search_value_type:
   - imdb_id

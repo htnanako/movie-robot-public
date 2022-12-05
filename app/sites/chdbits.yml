@@ -3,7 +3,6 @@ name: 彩虹岛
 domain: https://chdbits.co/
 encoding: UTF-8
 config_url: https://ghproxy.com/https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/chdbits.yml
-version: 20220913
 
 login:
   test:

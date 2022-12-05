@@ -3,7 +3,6 @@ name: 丐帮
 domain: https://gainbound.net/
 encoding: UTF-8
 config_url: https://ghproxy.com/https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/gainbound.yml
-version: 20220917
 
 login:
   test:

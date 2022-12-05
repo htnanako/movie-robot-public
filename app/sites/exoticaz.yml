@@ -3,7 +3,6 @@ name: exoticaz
 domain: https://exoticaz.to/
 encoding: UTF-8
 config_url: https://ghproxy.com/https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/exoticaz.yml
-version: 20220913
 
 login:
   test:

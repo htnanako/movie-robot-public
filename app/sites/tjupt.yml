@@ -3,7 +3,6 @@ name: 北洋园
 domain: https://tjupt.org/
 encoding: UTF-8
 config_url: https://ghproxy.com/https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/tjupt.yml
-version: 20220913
 
 login:
   test:

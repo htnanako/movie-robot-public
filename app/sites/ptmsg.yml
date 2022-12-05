@@ -3,7 +3,6 @@ name: 马杀鸡
 domain: https://pt.msg.vg/
 encoding: UTF-8
 config_url: https://ghproxy.com/https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/ptmsg.yml
-version: 20220917
 
 login:
   test:

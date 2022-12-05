@@ -3,7 +3,6 @@ name: 学校
 domain: https://pt.btschool.club/
 encoding: UTF-8
 config_url: https://ghproxy.com/https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/btschool.yml
-version: 20220913
 
 login:
   test:
