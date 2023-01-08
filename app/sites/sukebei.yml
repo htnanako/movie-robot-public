@@ -1,0 +1,134 @@
+id: sukebei
+name: Sukebei
+domain: https://sukebei.nyaa.si/
+encoding: UTF-8
+config_url: https://ghproxy.com/https://raw.githubusercontent.com/eplang/movie-robot-public/main/app/sites/sukebei.yml
+
+login:
+  required: false
+
+category_mappings:
+  - { id: 0_0, cate_level1: AV, cate_level2: XXX, cate_level2_desc: "XXX" }
+
+userinfo:
+  constant: true
+  fields:
+    uid: 0
+    user_group: ''
+    username: 'sukebei'
+    share_ratio: ''
+    uploaded: 0
+    downloaded: 0
+    seeding: 0
+    leeching: 0
+    vip_group: 0
+list:
+  path: /
+  list:
+    selector: div.table-responsive > table > tbody > tr
+  fields:
+    id:
+      selector: td:nth-child(2) > a[href^="/view/"]
+      attribute: href
+      filters:
+        - name: re_search
+          args: [ '\d+', 0 ]
+    category:
+      default_value: 1
+    details:
+      selector: td:nth-child(2) > a[href^="/view/"]
+      attribute: href
+    download:
+      selector: a[href^="/download/"]
+      attribute: href
+    size:
+      selector: td:nth-child(4)
+    grabs:
+      selector: td:nth-child(8)
+    seeders:
+      selector: td:nth-child(6)
+    leechers:
+      selector: td:nth-child(7)
+    downloadvolumefactor:
+      default_value: 0
+    uploadvolumefactor:
+      default_value: 1
+    free_deadline:
+      default_value: "{{max_time}}"
+      default_value_format: '%Y-%m-%d %H:%M:%S.%f'
+    description:
+      selector: td:nth-child(2) > a[href^="/view/"]
+      filters:
+        - name: replace
+          args: [ "+++", ""]
+        - name: replace
+          args: [ "[HD]", ""]
+        - name: replace
+          args: [ "[FHD]", ""]
+        - name: replace
+          args: [ "[HD/720p]", ""]
+        - name: replace
+          args: [ "[HD JAV Uncensored]", ""]
+        # - name: re_replace
+          # args: [ "(\\\\[\\w+\\\\])", ""]
+    title:
+      text: "{{ fields['description']}}"
+search:
+  paths:
+    - path: /
+      categories: [ 0_0 ]
+  query:
+    f: "0"
+    c: "0_0"
+    q: "{{query.keyword}}"
+
+torrents:
+  list:
+    selector: div.table-responsive > table > tbody > tr
+  fields:
+    id:
+      selector: td:nth-child(2) > a[href^="/view/"]
+      attribute: href
+      filters:
+        - name: re_search
+          args: [ '\d+', 0 ]
+    category:
+      default_value: 1
+    details:
+      selector: td:nth-child(2) > a[href^="/view/"]
+      attribute: href
+    download:
+      selector: a[href^="/download/"]
+      attribute: href
+    size:
+      selector: td:nth-child(4)
+    grabs:
+      selector: td:nth-child(8)
+    seeders:
+      selector: td:nth-child(6)
+    leechers:
+      selector: td:nth-child(7)
+    downloadvolumefactor:
+      default_value: 0
+    uploadvolumefactor:
+      default_value: 1
+    free_deadline: 
+      default_value: "{{max_time}}"
+      default_value_format: '%Y-%m-%d %H:%M:%S.%f'
+    description:
+      selector: td:nth-child(2) > a[href^="/view/"]
+      filters:
+        - name: replace
+          args: [ "+++", ""]
+        - name: replace
+          args: [ "[HD]", ""]
+        - name: replace
+          args: [ "[FHD]", ""]
+        - name: replace
+          args: [ "[HD/720p]", ""]
+        - name: replace
+          args: [ "[HD JAV Uncensored]", ""]
+        # - name: re_replace
+          # args: [ "(\\\\[\\w+\\\\])", ""]
+    title:
+      text: "{{ fields['description'] }}"
