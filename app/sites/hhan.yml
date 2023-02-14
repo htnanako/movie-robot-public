@@ -6,11 +6,11 @@ config_url: https://ghproxy.com/https://raw.githubusercontent.com/htnanako/movie
 
 login:
   test:
-    selector: a[href="logout.php"]
+    selector: a[href="getrss.php"]
 
 category_mappings:
   - { id: 401, cate_level1: Movie, cate_level2: Movies,cate_level2_ desc: "电影" }
-  - { id: 402, cate_level1: TV , cate_level2: TV, cate_level2_desc: "电视剧" }
+  - { id: 402, cate_level1: TV, cate_level2: TV, cate_level2_desc: "电视剧" }
   - { id: 403, cate_level1: TV, cate_level2: TV, cate_level2_desc: "综艺" }
   - { id: 404, cate_level1: Documentary, cate_level2: TV/Documentary, cate_level2_desc: "纪录片" }
   - { id: 405, cate_level1: Anime, cate_level2: TV/Anime, cate_level2_desc: "动漫" }
