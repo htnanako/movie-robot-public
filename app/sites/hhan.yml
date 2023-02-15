@@ -174,9 +174,16 @@ torrents:
           args: [ '\d+-\d+-\d+ \d+:\d+:\d+', 0 ]
         - name: dateparse
           args: "%Y-%m-%d %H:%M:%S"
-    description:
+    tags:
+      selectors: td:nth-child(2) > table > tr > td.embedded > span
+    subject_tmp:
+      selector: td:nth-child(2) > table > tr > td.embedded
+      remove: div,b,a
+    subject:
       selector: td:nth-child(2) > table > tr > td.embedded
       contents: -1
+    description:
+      text: "{% if fields['tags']%}{{ fields['subject']+' '+fields['tags']|join(' ') }}{% else %}{{ fields['subject'] }}{% endif %}"
     minimumratio:
       case:
         img.hitandrun: 1
