@@ -18,6 +18,15 @@ category_mappings:
   - { id: 408, cate_level1: Music, cate_level2: Audio, cate_level2_desc: "HQ Audio(音乐)" }
   - { id: 500, cate_level1: Music, cate_level2: Audio, cate_level2_desc: "Music(无损)" }
   - { id: 409, cate_level1: Other, cate_level2: Other, cate_level2_desc: "Video Portray(写真视频)" }
+# 搜索时id映射
+category_id_mapping:
+  - { id: movie, mapping: 401 }
+  - { id: tv, mapping: [ 402,403 ] }
+  - { id: doc, mapping: [ 404 ] }
+  - { id: animate, mapping: 405 }
+  - { id: mv, mapping: 406 }
+  - { id: music, mapping: [ 408,500 ] }
+  - { id: other, mapping: 409 }
 userinfo:
   path: https://lemonhd.org/rules.php
   item:
@@ -96,7 +105,7 @@ search:
 
 torrents:
   list:
-    selector: table.torrents > tr:has(a[href^="download.php?"])
+    selector: table.torrents > tr:has(b)
   fields:
     id:
       selector: a[href^="details_"]
@@ -143,7 +152,7 @@ torrents:
       optional: true
     date_added:
       # time added
-      selector: td:nth-last-child(7):not(:has(span[title])):not(:has(a))
+      selector: td:nth-last-child(7)
       optional: true
     date:
       text: "{% if fields['date_elapsed'] or fields['date_added'] %}{{ fields['date_elapsed'] if fields['date_elapsed'] else fields['date_added'] }}{% else %}now{% endif %}"
@@ -172,3 +181,4 @@ torrents:
       selectors: td:nth-child(3) > span.tag
     description:
       text: "{% if fields['tags']%}{{ fields['subject']+' '+fields['tags']|join(' ') }}{% else %}{{ fields['subject'] }}{% endif %}"
+    
