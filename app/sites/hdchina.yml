@@ -121,7 +121,7 @@ search:
 
 torrents:
   list:
-    selector: table.torrent_list > tr:has(a[href^="?cat="])
+    selector: table.torrent_list > tr:has(td.t_name)
   fields:
     id:
       selector: a[href^="details.php?id="]
