@@ -62,7 +62,7 @@ search:
 
 torrents:
   list:
-    selector: div.card.mt-2 > div.card-body.p-2 > div.table-responsive > table > tbody > tr:has(td > i.fa.fa-video.category-icon)
+    selector: div.card.mt-2 > div.card-body.p-2 > div.table-responsive > table > tbody > tr:has(i)
   fields:
     id:
       selector: a[href^="https://exoticaz.to/torrent/"]

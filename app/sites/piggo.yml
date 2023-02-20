@@ -101,7 +101,7 @@ search:
 
 torrents:
   list:
-    selector: table.torrents > tr:has(table.torrentname):not(:has(span[title='置顶促销']))
+    selector: table.torrents > tr:has(table):not(:has(span[title='置顶促销']))
   fields:
     id:
       selector: a[href^="details.php?id="]
