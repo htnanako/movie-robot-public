@@ -34,13 +34,13 @@ userinfo:
           args: [ '\d+', 0 ]
     user_group:
       default_value: 'User'
-      selector: li:has(> i[title="等级"])
+      selector: li > i[title="等级"] + span
     username:
       default_value: '未知用户名'
       selector: a[href^="userdetails.php"]:has(> img)
     share_ratio:
       default_value: 0
-      selector: li:has(> i[title="分享率"])
+      selector: li > i[title="分享率"] + span
       filters:
         - name: replace
           args: [ '无限','inf' ]
@@ -48,22 +48,22 @@ userinfo:
           args: [ '---','inf' ]
     uploaded:
       default_value: 0
-      selector: li:has(> i[title="上传量"]) > span
+      selector: li > i[title="上传量"] + span
       filters:
         - name: replace
           args: [ '无限','inf' ]
     downloaded:
       default_value: 0
-      selector: li:has(> i[title="下载量"]) > span
+      selector: li > i[title="下载量"] + span
       filters:
         - name: replace
           args: [ '无限','inf' ]
     seeding:
       default_value: 0
-      selector: li:has(> i[title="做种中"]) > span
+      selector: li > i[title="做种中"] + span
     leeching:
       default_value: 0
-      selector: li:has(> i[title="下载中"]) > span
+      selector: li > i[title="下载中"] + span
       # method: next_sibling
     vip_group:
       case:
