@@ -12,6 +12,7 @@ category_mappings:
   - { id: 401, cate_level1: Movie, cate_level2: 电影, cate_level2_desc: "电影" }
   - { id: 402, cate_level1: TV, cate_level2: 剧集, cate_level2_desc: "剧集" }
   - { id: 403, cate_level1: TV, cate_level2: 综艺, cate_level2_desc: "综艺" }
+  - { id: 406, cate_level1: Documentary, cate_level2: 纪录片, cate_level2_desc: "纪录片" }
   - { id: 408, cate_level1: Music, cate_level2: 音乐,cate_level2_ desc: "音乐" }
   - { id: 404, cate_level1: Music, cate_level2: 有声书, cate_level2_desc: "有声书" }
   - { id: 405, cate_level1: Other , cate_level2: 电子书, cate_level2_desc: "电子书" }
