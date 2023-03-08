@@ -36,18 +36,18 @@ userinfo:
   fields:
     uid:
       default_value: 0
-      selector: a[href^="userdetails.php?id="]
+      selector: a[href^="/userdetails.php?id="]
       attribute: href
       filters:
         - name: re_search
           args: [ '\d+', 0 ]
     user_group:
       default_value: ''
-      selector: a[href^="userdetails.php?id="]
+      selector: a[href^="/userdetails.php?id="]
       attribute: class
     username:
       default_value: '未知用户名'
-      selector: a[href^="userdetails.php?id="]
+      selector: a[href^="/userdetails.php?id="]
     share_ratio:
       default_value: ''
       selector: font[class="color_ratio"]
