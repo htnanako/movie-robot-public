@@ -6,7 +6,7 @@ config_url: https://ghproxy.com/https://raw.githubusercontent.com/htnanako/movie
 
 login:
   test:
-    selector: a[href="logout.php"]
+    selector: a[href^="userdetails.php"]
 
 category_mappings:
     - {id: 401, cate_level1: Movie, cate_level2: 电影, cate_level2_desc: "电影"}
@@ -92,7 +92,7 @@ search:
 
 torrents:
   list:
-    selector: table.torrents > tr:has(table)
+    selector: table.torrents > tr:has(table.torrentname)
   fields:
     id:
       selector: a[href^="details.php?id="]
