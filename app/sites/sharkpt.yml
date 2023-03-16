@@ -42,32 +42,27 @@ userinfo:
     share_ratio:
       default_value: 0
       selector: span[class="share_ratio"]
-      method: next_sibling
       filters:
         - name: replace
           args: [ '无限','inf' ]
     uploaded:
       default_value: 0
       selector: span[class="uploaded"]
-      method: next_sibling
       filters:
         - name: replace
           args: [ '无限','inf' ]
     downloaded:
       default_value: 0
       selector: span[class="downloaded"]
-      method: next_sibling
       filters:
         - name: replace
           args: [ '无限','inf' ]
     seeding:
       default_value: 0
       selector: span[class="seeding"]
-      method: next_sibling
     leeching:
       default_value: 0
       selector: span[class="leeching"]
-      method: next_sibling
     vip_group:
       case:
         a[class^="VIP"]: true
