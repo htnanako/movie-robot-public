@@ -6,7 +6,7 @@ config_url: https://ghproxy.com/https://raw.githubusercontent.com/htnanako/movie
 
 login:
   test:
-    selector: a[href="logout.php"]
+    selector: a[href^="logout.php"]
 
 category_mappings:
   - { id: 501, cate_level1: Movie, cate_level2 Movies, cate_level2_desc: "Movies(电影)" }
