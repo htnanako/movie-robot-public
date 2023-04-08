@@ -45,14 +45,14 @@ userinfo:
       text: 0
     uploaded:
       default_value: 0
-      selector: font[class="color_uploaded"]
+      selector: span[class="color_uploaded"]
       method: next_sibling
       filters:
         - name: replace
           args: [ '无限','inf' ]
     downloaded:
       default_value: 0
-      selector: font[class="color_downloaded"]
+      selector: span[class="color_downloaded"]
       method: next_sibling
       filters:
         - name: replace
