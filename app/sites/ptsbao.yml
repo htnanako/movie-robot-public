@@ -37,7 +37,7 @@ userinfo:
       attribute: class
     username:
       default_value: '未知用户名'
-      selector: a[href^="userdetails.php?id="]
+      selector: a[href^="userdetails.php?id="] > b
     share_ratio:
       default_value: ''
       selector: font[class="color_ratio"]
@@ -47,14 +47,14 @@ userinfo:
           args: [ '无限','inf' ]
     uploaded:
       default_value: 0
-      selector: font[class="color_uploaded"]
+      selector: font.color_uploaded
       method: next_sibling
       filters:
         - name: replace
           args: [ '无限','inf' ]
     downloaded:
       default_value: 0
-      selector: font[class="color_downloaded"]
+      selector: font.color_downloaded
       method: next_sibling
       filters:
         - name: replace
