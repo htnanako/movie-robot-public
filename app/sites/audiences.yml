@@ -43,7 +43,7 @@ userinfo:
       selector: a[href^="userdetails.php?id="]
     share_ratio:
       default_value: ''
-      selector: font[class="color_ratio"]
+      selector: span[class="color_ratio"]
       method: next_sibling
       filters:
         - name: replace
