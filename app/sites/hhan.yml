@@ -114,8 +114,8 @@ torrents:
       filters:
         - name: replace
           args: [ "?", "" ]
-        - name: querystring
-          args: cat\[\]
+        - name: re_search
+          args: [ '\d+', 0 ]
     details:
       selector: a[href^="details.php?id="]
       attribute: href
