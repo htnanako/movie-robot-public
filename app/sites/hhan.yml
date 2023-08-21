@@ -9,11 +9,11 @@ login:
     selector: img[src="styles/HHan/icons/icon-logout.svg"]
 
 category_mappings:
-  - { id: 401, cate_level1: Movie, cate_level2: Movies,cate_level2_ desc: "电影" }
-  - { id: 402, cate_level1: TV, cate_level2: TV, cate_level2_desc: "电视剧" }
-  - { id: 403, cate_level1: TV, cate_level2: TV, cate_level2_desc: "综艺" }
-  - { id: 404, cate_level1: Documentary, cate_level2: TV/Documentary, cate_level2_desc: "纪录片" }
-  - { id: 405, cate_level1: Anime, cate_level2: TV/Anime, cate_level2_desc: "动漫" }
+  - { id: 401, cate_level1: Movie, cate_level2: Movies,cate_level2_ desc: "Movie" }
+  - { id: 402, cate_level1: TV, cate_level2: TV, cate_level2_desc: "TV Series" }
+  - { id: 403, cate_level1: TV, cate_level2: TV, cate_level2_desc: "TV Show" }
+  - { id: 404, cate_level1: Documentary, cate_level2: TV/Documentary, cate_level2_desc: "Documentary" }
+  - { id: 405, cate_level1: Anime, cate_level2: TV/Anime, cate_level2_desc: "Anime" }
   - { id: 406, cate_level1: Music, cate_level2: Audio/Video, cate_level2_desc: "MV" }
   - { id: 407, cate_level1: TV, cate_level2: TV/Sport, cate_level2_desc: "Sports" }
   - { id: 408, cate_level1: Music, cate_level2: Audio, cate_level2_desc: "HQ Audio" }
@@ -76,7 +76,7 @@ search:
     - path: torrents.php
       method: get
   query:
-    $raw: "{% for c in query.cates %}cat{{c}}=1&{% endfor %}"
+    $raw: "{% for c in query.cates %}cat[]={{c}}&{% endfor %}"
     search: "{% if query.imdb_id %}{{query.imdb_id}}{%else%}{{query.keyword}}{% endif %}"
     # 0 incldead, 1 active, 2 dead
     incldead: 1
@@ -85,14 +85,14 @@ search:
     # 0 title, 1 descr, 3 uploader, 4 imdburl (searching imdburl does not work with tt1234567, but descr is good)
     search_area: "{% if query.imdb_id %}4{% else %}0{%endif%}"
     # 0 AND, 1 OR, 2 exact
-    search_mode: 0
+    search-mode: 0
     sort: "{{ query.sort }}"
     type: "{{ query.type }}"
     page: "{{ query.page }}"
 
 torrents:
   list:
-    selector: div[id="mainContent"] > div > div.z-10.m-auto.w-\[90\%\].m-auto.my-\[25px\].\!rounded-md > div.flex.flex-col.w-\[90\%\].m-auto > div
+    selector: div[id="mainContent"] > div > div.z-10.m-auto.w-\[90\%\].m-auto.my-\[25px\].\!rounded-md > div.flex.flex-col.w-\[95\%\].m-auto > div
   fields:
     id:
       selector: a[href^="details.php?id="]
@@ -109,13 +109,13 @@ torrents:
     title:
       text: "{% if fields['title_optional'] %}{{ fields['title_optional'] }}{% else %}{{ fields['title_default'] }}{% endif %}"
     category:
-      selector: a[href^="?cat="]
+      selector: a[href^="?cat\[\]="]
       attribute: href
       filters:
         - name: replace
           args: [ "?", "" ]
         - name: querystring
-          args: cat
+          args: cat\[\]
     details:
       selector: a[href^="details.php?id="]
       attribute: href
@@ -149,7 +149,7 @@ torrents:
     leechers:
       selector: div.items-center > div.torrent-info > div:nth-child(4) > a
     grabs:
-      selector: div.items-center > div.torrent-info > div:nth-child(4) > a
+      selector: div.items-center > div.torrent-info > div:nth-child(5)
     downloadvolumefactor:
       case:
         span.promotion-tag-free: 0
