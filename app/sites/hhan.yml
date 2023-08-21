@@ -92,7 +92,7 @@ search:
 
 torrents:
   list:
-    selector: div[id="mainContent"] > div > div.z-10.m-auto.w-\[90\%\].m-auto.my-\[25px\].\!rounded-md > div.flex.flex-col.w-\[95\%\].m-auto > div
+    selector: div[id="mainContent"] > div > div.z-10.m-auto.m-auto.\!rounded-md > div.flex.flex-col.m-auto > div
   fields:
     id:
       selector: a[href^="details.php?id="]
@@ -101,7 +101,7 @@ torrents:
         - name: re_search
           args: [ '\d+', 0 ]
     title_default:
-      selector: div.flex.torrent-title.items-center.gap-x-\[15px\].justify-between > div > a[href^="details.php?id="]
+      selector: div.flex.torrent-title.items-center.justify-between > div > a[href^="details.php?id="]
     title_optional:
       optional: true
       selector: a[title][href^="details.php?id="]
