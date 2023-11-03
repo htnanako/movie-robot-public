@@ -2,7 +2,7 @@ id: wintersakura
 name: 冬樱
 domain: https://wintersakura.net/
 encoding: UTF-8
-config_url: https://ghproxy.com/https://raw.githubusercontent.com/htnanako/movie-robot-public/localization/app/sites/wintersakura.yml
+config_url: https://ghproxy.com/https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/wintersakura.yml
 
 login:
   test:
