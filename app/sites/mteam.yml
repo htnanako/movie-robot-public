@@ -208,3 +208,41 @@ torrents:
     description:
       selector: table.torrentname > tr > td.embedded
       contents: -1
+
+detail:
+  item:
+    selector: table.mainouter > tr:last-child
+  fields:
+    downloadvolumefactor:
+      case:
+        font.halfdown: 0.5
+        "*": 1
+    title:
+      selector: h1[id="top"]
+      remove: b
+    download:
+      selector: a[href^="download.php?id="]
+      attribute: href
+    filename:
+      selector: td.rowfollow > a[class="index"]
+    description:
+      selector: table > tr:nth-child(2) > td:last-child
+    intro:
+      selector: div[id="kdescr"]
+    date:
+      selector: table > tr:nth-child(1) > td > span[title]
+      attribute: title
+      filters:
+        - name: dateparse
+          args: "%Y-%m-%d %H:%M:%S"
+    images:
+      selectors: img[onclick^="Preview"]
+      item:
+        selector: img
+        attribute: src
+    id:
+      selector: a[href^="download.php?id="]
+      attribute: href
+      filters:
+        - name: re_search
+          args: [ '\d+', 0 ]
