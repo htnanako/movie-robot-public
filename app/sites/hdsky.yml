@@ -188,8 +188,8 @@ torrents:
     tags:
       selectors: td.embedded > span.optiontag
     subject:
-      selector: td:nth-child(2) > table > tr > td.embedded
-      remove: img,a,b,span
+      selector: td:nth-child(2) > table > tr > td.embedded > span:last-child
+      remove: b
       filters:
         - name: replace
           args: [ "[优惠剩余时间：]","" ]
