@@ -2,7 +2,7 @@ id: ultrahd
 name: ultrahd
 domain: https://ultrahd.net/
 encoding: UTF-8
-config_url: https://ghproxy.com/https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/ultrahd.yml
+config_url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/ultrahd.yml
 
 login:
   test:

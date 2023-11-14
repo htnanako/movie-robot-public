@@ -2,7 +2,7 @@ id: HDZone
 name: 空间
 domain: https://hdzone.me/
 encoding: UTF-8
-config_url: https://ghproxy.com/https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/hdzone.yml
+config_url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/hdzone.yml
 
 login:
   test:

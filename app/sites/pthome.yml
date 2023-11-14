@@ -2,7 +2,7 @@ id: pthome
 name: 铂金家
 domain: https://pthome.net/
 encoding: UTF-8
-config_url: https://ghproxy.com/https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/pthome.yml
+config_url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/pthome.yml
 
 login:
   test:

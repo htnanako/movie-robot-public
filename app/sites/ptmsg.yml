@@ -2,7 +2,7 @@ id: PTMSG
 name: 马杀鸡
 domain: https://pt.msg.vg/
 encoding: UTF-8
-config_url: https://ghproxy.com/https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/ptmsg.yml
+config_url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/ptmsg.yml
 
 login:
   test:
