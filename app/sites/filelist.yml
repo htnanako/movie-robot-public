@@ -2,7 +2,7 @@ id: filelist
 name: filelist
 domain: https://filelist.io/
 encoding: UTF-8
-config_url: https://ghproxy.com/https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/filelist.yml
+config_url: https://mirror.ghproxy.com/https://raw.githubusercontent.com/htnanako/movie-robot-public/main/app/sites/filelist.yml
 
 sub_search_value_type:
   - imdb_id
