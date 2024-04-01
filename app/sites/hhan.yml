@@ -92,7 +92,7 @@ search:
 
 torrents:
   list:
-    selector: div[id="mainContent"] > div > div.z-10.m-auto.m-auto.\!rounded-md > div.flex.flex-col.m-auto > div
+    selector: div[id="mainContent"] > div > div.z-10.m-auto.m-auto.\!rounded-md > div.flex.flex-col.m-auto > div.torrent-table-sub-info
   fields:
     id:
       selector: a[href^="details.php?id="]
